@@ -1,0 +1,13 @@
+#忽略以下文件夹
+.metadata
+.idea
+.iml
+#忽略任意级以下名称目录下的文件
+targit/
+bin/
+#忽略指定后缀名所有文件
+*.project
+*.settings
+*.factorypath
+*.classpath
+*.springBeans
