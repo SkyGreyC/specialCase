@@ -14,9 +14,15 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <sql id="columnsAll">
+        user_id,user_name,password,nick_name,
+        user_type,admin_type,is_del,create_time
+    </sql>
     <!--  -->
-    <select id="findUser" resultMap="user">
-        SELECT * FROM sc_user
+    <select id="getUserInfo" resultMap="user">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_user
+        WHERE user_name=#{user.userName} and is_del=#{user.isDel}
     </select>
 
 </mapper>
