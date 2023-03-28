@@ -1,5 +1,6 @@
 package com.sc.login.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sc.login.logic.UserLogic;
 import com.sc.login.service.vo.UserVO;
 import com.sc.utils.CommonUtils;
@@ -49,6 +50,63 @@ public class LoginService {
             UserVO userInfo = MapToBean.toBean(userEntity,UserVO.class);
             loginInfo.put("userInfo",userInfo);
             model.msgSuccess("登录成功",loginInfo);
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 重置用户密码
+     * */
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
+    public JsonModel resetPassword(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            String userId = MapUtils.getString(map,"userId");
+            String password = MapUtils.getString(map,"password");
+            if(CommonUtils.isNull(password)){
+                model.msgError("重置失败，密码为空");
+                return model;
+            }
+            userLogic.resetPassword(userId,password);
+            model.msgSuccess("重置用户密码成功");
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 注册用户
+     * */
+    @RequestMapping(value = "/registerUser",method = RequestMethod.POST)
+    public JsonModel registerUser(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            if(CommonUtils.isAnyNull(userVO.getUserName(),userVO.getPassword())){
+                model.msgError("注册失败，用户名或密码为空");
+                return model;
+            }
+            userLogic.registerUser(MapToBean.toBean(userVO,UserEntity.class));
+            model.msgSuccess("注册用户成功");
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 获取用户列表
+     * */
+    @RequestMapping(value = "/findUserList",method = RequestMethod.POST)
+    public JsonModel findUserList(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            Page<UserVO> page = MapToBean.getPage(map,"page",UserVO.class);
+            List<UserEntity> data = userLogic.findUserList(page);
+            model.msgSuccess("获取用户列表成功",MapToBean.toList(data,UserVO.class),page);
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());

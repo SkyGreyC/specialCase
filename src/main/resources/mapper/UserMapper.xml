@@ -18,11 +18,124 @@
         user_id,user_name,password,nick_name,
         user_type,admin_type,is_del,create_time
     </sql>
-    <!--  -->
+    <!-- 通过用户名查询用户信息 -->
     <select id="getUserInfo" resultMap="user">
         SELECT <include refid="columnsAll"/>
         FROM sc_user
         WHERE user_name=#{user.userName} and is_del=#{user.isDel}
+    </select>
+
+    <update id="updateByKey">
+        UPDATE sc_user
+        <set>
+            <if test="user.userName!=null and user.userName !=''">
+                user_name=#{user.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="user.password!=null and user.password !=''">
+                password=#{user.password,jdbcType=VARCHAR},
+            </if>
+            <if test="user.nickName!=null and user.nickName !=''">
+                nick_name=#{user.nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userType!=null and user.userType !=''">
+                user_type=#{user.userType,jdbcType=VARCHAR},
+            </if>
+            <if test="user.adminType!=null and user.adminType !=''">
+                admin_type=#{user.adminType,jdbcType=VARCHAR},
+            </if>
+            <if test="user.isDel!=null and user.isDel !=''">
+                is_del=#{user.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="user.createTime!=null">
+                create_time=#{user.createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE user_id=#{user.userId}
+    </update>
+
+    <insert id="insertUser">
+        INSERT INTO sc_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user.userId!=null and user.userId !=''">
+                user_id,
+            </if>
+            <if test="user.userName!=null and user.userName !=''">
+                user_name,
+            </if>
+            <if test="user.password!=null and user.password !=''">
+                password,
+            </if>
+            <if test="user.nickName!=null and user.nickName !=''">
+                nick_name,
+            </if>
+            <if test="user.userType!=null and user.userType !=''">
+                user_type,
+            </if>
+            <if test="user.adminType!=null and user.adminType !=''">
+                admin_type,
+            </if>
+            <if test="user.isDel!=null and user.isDel !=''">
+                is_del
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="user.userId!=null and user.userId !=''">
+                #{user.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userName!=null and user.userName !=''">
+                #{user.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="user.password!=null and user.password !=''">
+                #{user.password,jdbcType=VARCHAR},
+            </if>
+            <if test="user.nickName!=null and user.nickName !=''">
+                #{user.nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userType!=null and user.userType !=''">
+                #{user.userType,jdbcType=VARCHAR},
+            </if>
+            <if test="user.adminType!=null and user.adminType !=''">
+                #{user.adminType,jdbcType=VARCHAR},
+            </if>
+            <if test="user.isDel!=null and user.isDel !=''">
+                #{user.isDel,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 查询用户列表 -->
+    <select id="findByWhere" resultMap="user">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_user
+        <where>
+            <if test="user != null">
+                <if test="user.userId!=null and user.userId !=''">
+                    AND user_id=#{user.userId,jdbcType=VARCHAR}
+                </if>
+                <if test="user.userName!=null and user.userName !=''">
+                    AND user_name=#{user.userName,jdbcType=VARCHAR}
+                </if>
+                <if test="user.password!=null and user.password !=''">
+                    AND password=#{user.password,jdbcType=VARCHAR}
+                </if>
+                <if test="user.nickName!=null and user.nickName !=''">
+                    AND nick_name=#{user.nickName,jdbcType=VARCHAR}
+                </if>
+                <if test="user.userType!=null and user.userType !=''">
+                    AND user_type=#{user.userType,jdbcType=VARCHAR}
+                </if>
+                <if test="user.adminType!=null and user.adminType !=''">
+                    AND admin_type=#{user.adminType,jdbcType=VARCHAR}
+                </if>
+                <if test="user.isDel!=null and user.isDel !=''">
+                    AND is_del=#{user.isDel,jdbcType=VARCHAR}
+                </if>
+                <if test="user.createTime!=null">
+                    AND create_time=#{user.createTime,jdbcType=VARCHAR}
+                </if>
+            </if>
+        </where>
+        ORDER BY create_time DESC
     </select>
 
 </mapper>
