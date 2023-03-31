@@ -58,4 +58,26 @@ public class UserLogic {
         entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
         return userMapper.findByWhere(page,entity);
     }
+
+    /**
+     * 修改用户权限
+     */
+    public int updateUserType(UserEntity entity){
+        return userMapper.updateByKey(entity);
+    }
+
+    /**
+     * 删除用户
+     */
+    public int deleteUser(UserEntity entity){
+        entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+        return userMapper.updateByKey(entity);
+    }
+
+    /**
+     * 修改个人昵称
+     */
+    public int updateNickName(UserEntity entity){
+        return userMapper.updateByKey(entity);
+    }
 }

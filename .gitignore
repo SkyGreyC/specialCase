@@ -3,7 +3,7 @@
 .idea
 .iml
 #忽略任意级以下名称目录下的文件
-targit/
+target/
 bin/
 #忽略指定后缀名所有文件
 *.project

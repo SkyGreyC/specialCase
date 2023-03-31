@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sc.home.mapper.HomeMapper">
+    <resultMap id="home" type="com.sc.utils.entity.HomeEntity">
+        <id property="homeId" column="home_id" jdbcType="VARCHAR"/>
+        <result property="homeTitle" column="home_title" jdbcType="VARCHAR"/>
+        <result property="homeInfo" column="home_info" jdbcType="VARCHAR"/>
+        <result property="homeType" column="home_type" jdbcType="VARCHAR"/>
+        <result property="isDel" column="is_del" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columnsAll">
+        home_id,home_title,home_info,home_type,
+        ,is_del,create_time
+    </sql>
+
+    <!-- 查询首页信息 -->
+    <select id="getHomeInfo" resultMap="home">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_home
+        WHERE is_del=#{home.isDel}
+    </select>
+
+    <update id="updateByKey">
+        UPDATE sc_home
+        <set>
+            <if test="home.homeTitle!=null and home.homeTitle !=''">
+                home_title=#{home.homeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="home.homeInfo!=null and home.homeInfo !=''">
+                home_info=#{home.homeInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="home.homeType!=null and home.homeType !=''">
+                home_type=#{home.homeType,jdbcType=VARCHAR},
+            </if>
+            <if test="home.isDel!=null and home.isDel !=''">
+                is_del=#{home.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="home.createTime!=null">
+                create_time=#{home.createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE home_id=#{home.homeId}
+    </update>
+
+    <insert id="insertHome">
+        INSERT INTO sc_home
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="home.homeId!=null and home.homeId !=''">
+                home_id,
+            </if>
+            <if test="home.homeTitle!=null and home.homeTitle !=''">
+                home_title,
+            </if>
+            <if test="home.homeInfo!=null and home.homeInfo !=''">
+                home_info,
+            </if>
+            <if test="home.homeType!=null and home.homeType !=''">
+                home_type,
+            </if>
+            <if test="home.isDel!=null and home.isDel !=''">
+                is_del
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="home.homeId!=null and home.homeId !=''">
+                #{home.homeId,jdbcType=VARCHAR},
+            </if>
+            <if test="home.homeTitle!=null and home.homeTitle !=''">
+                #{home.homeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="home.homeInfo!=null and home.homeInfo !=''">
+                #{home.homeInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="home.homeType!=null and home.homeType !=''">
+                #{home.homeType,jdbcType=VARCHAR},
+            </if>
+            <if test="home.isDel!=null and home.isDel !=''">
+                #{home.isDel,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 查询列表 -->
+    <select id="findByWhere" resultMap="home">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_home
+        <where>
+            <if test="home != null">
+                <if test="home.homeId!=null and home.homeId !=''">
+                    AND home_id=#{home.homeId,jdbcType=VARCHAR}
+                </if>
+                <if test="home.homeTitle!=null and home.homeTitle !=''">
+                    AND home_title = #{home.homeTitle,jdbcType=VARCHAR}
+                </if>
+                <if test="home.homeInfo!=null and home.homeInfo !=''">
+                    AND home_info=#{home.homeInfo,jdbcType=VARCHAR}
+                </if>
+                <if test="home.homeType!=null and home.homeType !=''">
+                    AND home_type=#{home.homeType,jdbcType=VARCHAR}
+                </if>
+                <if test="home.isDel!=null and home.isDel !=''">
+                    AND is_del=#{home.isDel,jdbcType=VARCHAR}
+                </if>
+                <if test="home.createTime!=null">
+                    AND create_time=#{home.createTime,jdbcType=VARCHAR}
+                </if>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

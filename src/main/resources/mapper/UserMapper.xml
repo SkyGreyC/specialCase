@@ -113,13 +113,13 @@
                     AND user_id=#{user.userId,jdbcType=VARCHAR}
                 </if>
                 <if test="user.userName!=null and user.userName !=''">
-                    AND user_name=#{user.userName,jdbcType=VARCHAR}
+                    AND user_name like concat('%',#{user.userName,jdbcType=VARCHAR},'%')
                 </if>
                 <if test="user.password!=null and user.password !=''">
                     AND password=#{user.password,jdbcType=VARCHAR}
                 </if>
                 <if test="user.nickName!=null and user.nickName !=''">
-                    AND nick_name=#{user.nickName,jdbcType=VARCHAR}
+                    AND nick_name like concat('%',#{user.nickName,jdbcType=VARCHAR},'%')
                 </if>
                 <if test="user.userType!=null and user.userType !=''">
                     AND user_type=#{user.userType,jdbcType=VARCHAR}

@@ -112,4 +112,64 @@ public class LoginService {
             return new JsonModel().msgError(e.getMessage());
         }
     }
+
+    /*
+     * 修改用户权限
+     * */
+    @RequestMapping(value = "/updateUserType",method = RequestMethod.POST)
+    public JsonModel updateUserType(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            if(CommonUtils.isAnyNull(userVO.getUserId(),userVO.getUserType())){
+                model.msgError("修改失败，用户id或权限类型为空");
+                return model;
+            }
+            userLogic.updateUserType(MapToBean.toBean(userVO,UserEntity.class));
+            model.msgSuccess("修改用户权限成功");
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 删除用户
+     * */
+    @RequestMapping(value = "/deleteUser",method = RequestMethod.POST)
+    public JsonModel deleteUser(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            if(CommonUtils.isNull(userVO.getUserId())){
+                model.msgError("删除失败，用户id为空");
+                return model;
+            }
+            userLogic.deleteUser(MapToBean.toBean(userVO,UserEntity.class));
+            model.msgSuccess("删除用户成功");
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 修改个人昵称
+     * */
+    @RequestMapping(value = "/updateNickName",method = RequestMethod.POST)
+    public JsonModel updateNickName(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            if(CommonUtils.isAnyNull(userVO.getUserId(),userVO.getNickName())){
+                model.msgError("修改个人昵称失败，用户id或昵称为空");
+                return model;
+            }
+            userLogic.updateNickName(MapToBean.toBean(userVO,UserEntity.class));
+            model.msgSuccess("修改个人昵称成功");
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
 }
