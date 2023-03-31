@@ -1,4 +1,4 @@
-package com.sc.login.service.vo;
+package com.sc.user.service.vo;
 
 public class MarkVO {
 

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sc.caselist.mapper.ImageMapper">
+    <resultMap id="image" type="com.sc.utils.entity.ImageEntity">
+        <id property="imageId" column="image_id" jdbcType="VARCHAR"/>
+        <result property="resourceId" column="resource_id" jdbcType="VARCHAR"/>
+        <result property="resourceType" column="resource_type" jdbcType="VARCHAR"/>
+        <result property="imageName" column="image_name" jdbcType="VARCHAR"/>
+        <result property="imageSuffix" column="image_suffix" jdbcType="VARCHAR"/>
+        <result property="imageSize" column="image_size" jdbcType="DECIMAL"/>
+        <result property="creatorId" column="creator_id" jdbcType="VARCHAR"/>
+        <result property="creatorName" column="creator_name" jdbcType="VARCHAR"/>
+        <result property="isDel" column="is_del" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columnsAll">
+        image_id,resource_id,resource_type,image_name,image_suffix,image_size,
+        creator_id,creatorName,is_del,update_time
+    </sql>
+
+    <!-- updateByKey -->
+    <update id="updateByKey">
+        UPDATE sc_image
+        <set>
+            <if test="image.resourceId!=null and image.resourceId !=''">
+                resource_id=#{image.resourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="image.resourceType!=null and image.resourceType !=''">
+                resource_type=#{image.resourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="image.imageName!=null and image.imageName !=''">
+                image_name=#{image.imageName,jdbcType=VARCHAR},
+            </if>
+            <if test="image.imageSuffix!=null and image.imageSuffix !=''">
+                image_suffix=#{image.imageSuffix,jdbcType=VARCHAR},
+            </if>
+            <if test="image.imageSize!=null and image.imageSize !=''">
+                image_size=#{image.imageSize,jdbcType=DECIMAL},
+            </if>
+            <if test="image.creatorId!=null and image.creatorId !=''">
+                creator_id=#{image.creatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="image.creatorName!=null and image.creatorName !=''">
+                creator_name=#{image.creatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="image.isDel!=null and image.isDel !=''">
+                is_del=#{image.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="image.updateTime!=null">
+                update_time=#{image.updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE image_id=#{image.imageId}
+    </update>
+
+    <insert id="insertImage">
+        INSERT INTO sc_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="image.imageId!=null and image.imageId !=''">
+                image_id,
+            </if>
+            <if test="image.resourceId!=null and image.resourceId !=''">
+                resource_id,
+            </if>
+            <if test="image.resourceType!=null and image.resourceType !=''">
+                resource_type,
+            </if>
+            <if test="image.imageName!=null and image.imageName !=''">
+                image_name,
+            </if>
+            <if test="image.imageSuffix!=null and image.imageSuffix !=''">
+                image_suffix,
+            </if>
+            <if test="image.imageSize!=null and image.imageSize !=''">
+                image_size,
+            </if>
+            <if test="image.creatorId!=null and image.creatorId !=''">
+                creator_id,
+            </if>
+            <if test="image.creatorName!=null and image.creatorName !=''">
+                creator_name,
+            </if>
+            <if test="image.isDel!=null and image.isDel !=''">
+                is_del,
+            </if>
+            <if test="image.updateTime!=null">
+                update_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="image.imageId!=null and image.imageId !=''">
+                #{image.imageId,jdbcType=VARCHAR},
+            </if>
+            <if test="image.resourceId!=null and image.resourceId !=''">
+                #{image.resourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="image.resourceType!=null and image.resourceType !=''">
+                #{image.resourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="image.imageName!=null and image.imageName !=''">
+                #{image.imageName,jdbcType=VARCHAR},
+            </if>
+            <if test="image.imageSuffix!=null and image.imageSuffix !=''">
+                #{image.imageSuffix,jdbcType=VARCHAR},
+            </if>
+            <if test="image.imageSize!=null and image.imageSize !=''">
+                #{image.imageSize,jdbcType=DECIMAL},
+            </if>
+            <if test="image.creatorId!=null and image.creatorId !=''">
+                #{image.creatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="image.creatorName!=null and image.creatorName !=''">
+                #{image.creatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="image.isDel!=null and image.isDel !=''">
+                #{image.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="image.updateTime!=null">
+                #{image.updateTime,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 查询列表 -->
+    <select id="findByWhere" resultMap="image">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_image
+        <where>
+            <if test="image != null">
+                <if test="image.imageId!=null and image.imageId !=''">
+                    AND image_id=#{image.imageId,jdbcType=VARCHAR}
+                </if>
+                <if test="image.resourceId!=null and image.resourceId !=''">
+                    AND resource_id=#{image.resourceId,jdbcType=VARCHAR}
+                </if>
+                <if test="image.resourceType!=null and image.resourceType !=''">
+                    AND resource_type=#{image.resourceType,jdbcType=VARCHAR}
+                </if>
+                <if test="image.imageName!=null and image.imageName !=''">
+                    AND image_name=#{image.imageName,jdbcType=VARCHAR}
+                </if>
+                <if test="image.imageSuffix!=null and image.imageSuffix !=''">
+                    AND image_suffix=#{image.imageSuffix,jdbcType=VARCHAR}
+                </if>
+                <if test="image.imageSize!=null and image.imageSize !=''">
+                    AND image_size=#{image.imageSize,jdbcType=DECIMAL}
+                </if>
+                <if test="image.creatorId!=null and image.creatorId !=''">
+                    AND creator_id=#{image.creatorId,jdbcType=VARCHAR}
+                </if>
+                <if test="image.creatorName!=null and image.creatorName !=''">
+                    AND creator_name=#{image.creatorName,jdbcType=VARCHAR}
+                </if>
+                <if test="image.isDel!=null and image.isDel !=''">
+                    AND is_del=#{image.isDel,jdbcType=VARCHAR}
+                </if>
+                <if test="image.updateTime!=null">
+                    AND update_time=#{image.updateTime,jdbcType=VARCHAR}
+                </if>
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
+</mapper>

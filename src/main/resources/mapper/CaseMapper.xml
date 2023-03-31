@@ -23,7 +23,7 @@
         <result property="creatorId" column="creator_id" jdbcType="VARCHAR"/>
         <result property="creatorName" column="creator_name" jdbcType="VARCHAR"/>
         <result property="isDel" column="is_del" jdbcType="VARCHAR"/>
-        <result property="updateTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="columnsAll">
@@ -159,7 +159,7 @@
                 is_del,
             </if>
             <if test="case.updateTime!=null">
-                update_time,
+                update_time
             </if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -221,7 +221,7 @@
                 #{case.isDel,jdbcType=VARCHAR},
             </if>
             <if test="case.updateTime!=null">
-                update_time=#{case.updateTime,jdbcType=VARCHAR},
+                update_time=#{case.updateTime,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>

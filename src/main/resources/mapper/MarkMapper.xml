@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sc.user.mapper.MarkMapper">
+    <resultMap id="mark" type="com.sc.utils.entity.MarkEntity">
+        <id property="markId" column="mark_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="caseId" column="case_id" jdbcType="VARCHAR"/>
+        <result property="isDel" column="is_del" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columnsAll">
+        mark_id,user_id,case_id,is_del,create_time
+    </sql>
+
+    <!-- updateByKey -->
+    <update id="updateByKey">
+        UPDATE sc_mark
+        <set>
+            <if test="mark.userId!=null and mark.userId !=''">
+                user_id=#{mark.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.caseId!=null and mark.caseId !=''">
+                case_id=#{mark.caseId,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.isDel!=null and mark.isDel !=''">
+                is_del=#{mark.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.createTime!=null">
+                create_time=#{mark.createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mark_id=#{mark.markId}
+    </update>
+
+    <insert id="insertMark">
+        INSERT INTO sc_mark
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mark.markId!=null and mark.markId !=''">
+                mark_id,
+            </if>
+            <if test="mark.userId!=null and mark.userId !=''">
+                user_id,
+            </if>
+            <if test="mark.caseId!=null and mark.caseId !=''">
+                case_id,
+            </if>
+            <if test="mark.isDel!=null and mark.isDel !=''">
+                is_del,
+            </if>
+            <if test="mark.createTime!=null">
+                create_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="mark.markId!=null and mark.markId !=''">
+                #{mark.markId,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.userId!=null and mark.userId !=''">
+                #{mark.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.caseId!=null and mark.caseId !=''">
+                #{mark.caseId,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.isDel!=null and mark.isDel !=''">
+                #{mark.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="mark.createTime!=null">
+                #{mark.createTime,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 查询列表 -->
+    <select id="findByWhere" resultMap="mark">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_mark
+        <where>
+            <if test="mark != null">
+                <if test="mark.markId!=null and mark.markId !=''">
+                    AND mark_id=#{mark.markId,jdbcType=VARCHAR}
+                </if>
+                <if test="mark.userId!=null and mark.userId !=''">
+                    AND user_id=#{mark.userId,jdbcType=VARCHAR}
+                </if>
+                <if test="mark.caseId!=null and mark.caseId !=''">
+                    AND case_id=#{mark.caseId,jdbcType=VARCHAR}
+                </if>
+                <if test="mark.isDel!=null and mark.isDel !=''">
+                    AND is_del=#{mark.isDel,jdbcType=VARCHAR}
+                </if>
+                <if test="mark.createTime!=null">
+                    AND create_time=#{mark.createTime,jdbcType=VARCHAR}
+                </if>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>
