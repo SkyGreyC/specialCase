@@ -28,5 +28,5 @@ public interface HomeMapper {
     /**
      * 查询首页信息
      */
-    List<HomeEntity> findByWhere(IPage<?> page, @Param("home") HomeEntity entity);
+    List<HomeEntity> findByWhere(@Param("home") HomeEntity entity);
 }

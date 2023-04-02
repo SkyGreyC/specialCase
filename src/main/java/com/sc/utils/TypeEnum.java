@@ -73,4 +73,28 @@ public class TypeEnum {
 
         public String toString() { return flag; }
     }
+
+    /**
+     * 图片标识
+     */
+    public static enum RESOURCE_TYPE{
+        /**
+         * 首页
+         */
+        HOME("00"),
+        /**
+         * 病例
+         */
+        CASE("01"),
+        /**
+         * 病灶
+         */
+        LESION("02");
+
+        private String flag;
+
+        private RESOURCE_TYPE(String flag) { this.flag=flag; }
+
+        public String toString() { return flag; }
+    }
 }

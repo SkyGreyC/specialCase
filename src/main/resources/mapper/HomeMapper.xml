@@ -14,7 +14,7 @@
 
     <sql id="columnsAll">
         home_id,home_title,home_info,home_type,
-        ,is_del,create_time
+        is_del,create_time
     </sql>
 
     <!-- 查询首页信息 -->
@@ -106,7 +106,7 @@
                     AND is_del=#{home.isDel,jdbcType=VARCHAR}
                 </if>
                 <if test="home.createTime!=null">
-                    AND create_time=#{home.createTime,jdbcType=VARCHAR}
+                    AND create_time=#{home.createTime,jdbcType=TIMESTAMP}
                 </if>
             </if>
         </where>
