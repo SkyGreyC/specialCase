@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sc.caselist.mapper.CaseMapper">
+    <resultMap id="case" type="com.sc.utils.entity.CaseEntity">
+        <id property="caseId" column="case_id" jdbcType="VARCHAR"/>
+        <result property="caseTitle" column="case_title" jdbcType="VARCHAR"/>
+        <result property="imageType" column="image_type" jdbcType="VARCHAR"/>
+        <result property="scanType" column="scan_type" jdbcType="VARCHAR"/>
+        <result property="clinical" column="clinical_history" jdbcType="VARCHAR"/>
+        <result property="clinicalHistory" column="clinical_history" jdbcType="VARCHAR"/>
+        <result property="machine" column="machine" jdbcType="VARCHAR"/>
+        <result property="tracer" column="tracer" jdbcType="VARCHAR"/>
+        <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
+        <result property="isTransfer" column="is_transfer" jdbcType="VARCHAR"/>
+        <result property="opinion" column="clinical_history" jdbcType="VARCHAR"/>
+        <result property="diagnosis" column="diagnosis" jdbcType="VARCHAR"/>
+        <result property="patientId" column="patient_id" jdbcType="VARCHAR"/>
+        <result property="patientAge" column="patient_age" jdbcType="VARCHAR"/>
+        <result property="patientGender" column="patient_gender" jdbcType="VARCHAR"/>
+        <result property="patientCard" column="patient_card" jdbcType="VARCHAR"/>
+        <result property="patientPhone" column="patient_phone" jdbcType="VARCHAR"/>
+        <result property="isSample" column="is_sample" jdbcType="VARCHAR"/>
+        <result property="creatorId" column="creator_id" jdbcType="VARCHAR"/>
+        <result property="creatorName" column="creator_name" jdbcType="VARCHAR"/>
+        <result property="isDel" column="is_del" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columnsAll">
+        case_id,case_title,image_type,scan_type,clinical,clinical_history,machine
+        ,tracer,keywords,is_transfer,opinion,diagnosis,patient_id,patient_age
+        ,patient_gender ,patient_card,patient_phone,is_sample,creator_id,creator_name
+        ,is_del,update_time
+    </sql>
+
+    <!-- updateByKey -->
+    <update id="updateByKey">
+        UPDATE sc_case
+        <set>
+            <if test="case.caseTitle!=null and case.caseTitle !=''">
+                case_title=#{case.caseTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="case.imageType!=null and case.imageType !=''">
+                image_type=#{case.imageType,jdbcType=VARCHAR},
+            </if>
+            <if test="case.scanType!=null and case.scanType !=''">
+                scan_type=#{case.scanType,jdbcType=VARCHAR},
+            </if>
+            <if test="case.clinical!=null and case.clinical !=''">
+                clinical=#{case.clinical,jdbcType=VARCHAR},
+            </if>
+            <if test="case.clinicalHistory!=null and case.clinicalHistory !=''">
+                clinical_history=#{case.clinicalHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="case.machine!=null and case.machine !=''">
+                machine=#{case.machine,jdbcType=VARCHAR},
+            </if>
+            <if test="case.tracer!=null and case.tracer !=''">
+                tracer=#{case.tracer,jdbcType=VARCHAR},
+            </if>
+            <if test="case.keywords!=null and case.keywords !=''">
+                keywords=#{case.keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="case.isTransfer!=null and case.isTransfer !=''">
+                is_transfer=#{case.isTransfer,jdbcType=VARCHAR},
+            </if>
+            <if test="case.opinion!=null and case.opinion !=''">
+                opinion=#{case.opinion,jdbcType=VARCHAR},
+            </if>
+            <if test="case.diagnosis!=null and case.diagnosis !=''">
+                diagnosis=#{case.diagnosis,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientId!=null and case.patientId !=''">
+                patient_id=#{case.patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientAge!=null and case.patientAge !=''">
+                patient_age=#{case.patientAge,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientGender!=null and case.patientGender !=''">
+                patient_gender=#{case.patientGender,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientCard!=null and case.patientCard !=''">
+                patient_card=#{case.patientCard,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientPhone!=null and case.patientPhone !=''">
+                patient_phone=#{case.patientPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="case.isSample!=null and case.isSample !=''">
+                is_sample=#{case.isSample,jdbcType=VARCHAR},
+            </if>
+            <if test="case.creatorId!=null and case.creatorId !=''">
+                creator_id=#{case.creatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="case.creatorName!=null and case.creatorName !=''">
+                creator_name=#{case.creatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="case.isDel!=null and case.isDel !=''">
+                is_del=#{case.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="case.updateTime!=null">
+                update_time=#{case.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE case_id=#{case.caseId}
+    </update>
+
+    <insert id="insertCase">
+        INSERT INTO sc_case
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="case.caseId!=null and case.caseId !=''">
+                case_id,
+            </if>
+            <if test="case.caseTitle!=null and case.caseTitle !=''">
+                case_title,
+            </if>
+            <if test="case.imageType!=null and case.imageType !=''">
+                image_type,
+            </if>
+            <if test="case.scanType!=null and case.scanType !=''">
+                scan_type,
+            </if>
+            <if test="case.clinical!=null and case.clinical !=''">
+                clinical,
+            </if>
+            <if test="case.clinicalHistory!=null and case.clinicalHistory !=''">
+                clinical_history,
+            </if>
+            <if test="case.machine!=null and case.machine !=''">
+                machine,
+            </if>
+            <if test="case.tracer!=null and case.tracer !=''">
+                tracer,
+            </if>
+            <if test="case.keywords!=null and case.keywords !=''">
+                keywords,
+            </if>
+            <if test="case.isTransfer!=null and case.isTransfer !=''">
+                is_transfer,
+            </if>
+            <if test="case.opinion!=null and case.opinion !=''">
+                opinion,
+            </if>
+            <if test="case.diagnosis!=null and case.diagnosis !=''">
+                diagnosis,
+            </if>
+            <if test="case.patientId!=null and case.patientId !=''">
+                patient_id,
+            </if>
+            <if test="case.patientAge!=null and case.patientAge !=''">
+                patient_age,
+            </if>
+            <if test="case.patientGender!=null and case.patientGender !=''">
+                patient_gender,
+            </if>
+            <if test="case.patientCard!=null and case.patientCard !=''">
+                patient_card,
+            </if>
+            <if test="case.patientPhone!=null and case.patientPhone !=''">
+                patient_phone,
+            </if>
+            <if test="case.isSample!=null and case.isSample !=''">
+                is_sample,
+            </if>
+            <if test="case.creatorId!=null and case.creatorId !=''">
+                creator_id,
+            </if>
+            <if test="case.creatorName!=null and case.creatorName !=''">
+                creator_name,
+            </if>
+            <if test="case.isDel!=null and case.isDel !=''">
+                is_del,
+            </if>
+            <if test="case.updateTime!=null">
+                update_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="case.caseId!=null and case.caseId !=''">
+                #{case.caseId,jdbcType=VARCHAR},
+            </if>
+            <if test="case.caseTitle!=null and case.caseTitle !=''">
+                #{case.caseTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="case.imageType!=null and case.imageType !=''">
+                #{case.imageType,jdbcType=VARCHAR},
+            </if>
+            <if test="case.scanType!=null and case.scanType !=''">
+                #{case.scanType,jdbcType=VARCHAR},
+            </if>
+            <if test="case.clinical!=null and case.clinical !=''">
+                #{case.clinical,jdbcType=VARCHAR},
+            </if>
+            <if test="case.clinicalHistory!=null and case.clinicalHistory !=''">
+                #{case.clinicalHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="case.machine!=null and case.machine !=''">
+                #{case.machine,jdbcType=VARCHAR},
+            </if>
+            <if test="case.tracer!=null and case.tracer !=''">
+                #{case.tracer,jdbcType=VARCHAR},
+            </if>
+            <if test="case.keywords!=null and case.keywords !=''">
+                #{case.keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="case.isTransfer!=null and case.isTransfer !=''">
+                #{case.isTransfer,jdbcType=VARCHAR},
+            </if>
+            <if test="case.opinion!=null and case.opinion !=''">
+                #{case.opinion,jdbcType=VARCHAR},
+            </if>
+            <if test="case.diagnosis!=null and case.diagnosis !=''">
+                #{case.diagnosis,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientId!=null and case.patientId !=''">
+                #{case.patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientAge!=null and case.patientAge !=''">
+                #{case.patientAge,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientGender!=null and case.patientGender !=''">
+                #{case.patientGender,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientCard!=null and case.patientCard !=''">
+                #{case.patientCard,jdbcType=VARCHAR},
+            </if>
+            <if test="case.patientPhone!=null and case.patientPhone !=''">
+                #{case.patientPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="case.isSample!=null and case.isSample !=''">
+                #{case.isSample,jdbcType=VARCHAR},
+            </if>
+            <if test="case.creatorId!=null and case.creatorId !=''">
+                #{case.creatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="case.creatorName!=null and case.creatorName !=''">
+                #{case.creatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="case.isDel!=null and case.isDel !=''">
+                #{case.isDel,jdbcType=VARCHAR},
+            </if>
+            <if test="case.updateTime!=null">
+                update_time=#{case.updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 查询列表 -->
+    <select id="findByWhere" resultMap="case">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_case
+        <where>
+            <if test="case != null">
+                <if test="case.caseId!=null and case.caseId !=''">
+                    AND case_id=#{case.caseId,jdbcType=VARCHAR}
+                </if>
+                <if test="case.caseTitle!=null and case.caseTitle !=''">
+                    AND case_title=#{case.caseTitle,jdbcType=VARCHAR}
+                </if>
+                <if test="case.imageType!=null and case.imageType !=''">
+                    AND image_type=#{case.imageType,jdbcType=VARCHAR}
+                </if>
+                <if test="case.scanType!=null and case.scanType !=''">
+                    AND scan_type=#{case.scanType,jdbcType=VARCHAR}
+                </if>
+                <if test="case.clinical!=null and case.clinical !=''">
+                    AND clinical=#{case.clinical,jdbcType=VARCHAR}
+                </if>
+                <if test="case.clinicalHistory!=null and case.clinicalHistory !=''">
+                    AND clinical_history=#{case.clinicalHistory,jdbcType=VARCHAR}
+                </if>
+                <if test="case.machine!=null and case.machine !=''">
+                    AND machine=#{case.machine,jdbcType=VARCHAR}
+                </if>
+                <if test="case.tracer!=null and case.tracer !=''">
+                    AND tracer=#{case.tracer,jdbcType=VARCHAR}
+                </if>
+                <if test="case.keywords!=null and case.keywords !=''">
+                    AND keywords=#{case.keywords,jdbcType=VARCHAR}
+                </if>
+                <if test="case.isTransfer!=null and case.isTransfer !=''">
+                    AND is_transfer=#{case.isTransfer,jdbcType=VARCHAR}
+                </if>
+                <if test="case.opinion!=null and case.opinion !=''">
+                    AND opinion=#{case.opinion,jdbcType=VARCHAR}
+                </if>
+                <if test="case.diagnosis!=null and case.diagnosis !=''">
+                    AND diagnosis=#{case.diagnosis,jdbcType=VARCHAR}
+                </if>
+                <if test="case.patientId!=null and case.patientId !=''">
+                    AND patient_id=#{case.patientId,jdbcType=VARCHAR}
+                </if>
+                <if test="case.patientAge!=null and case.patientAge !=''">
+                    AND patient_age=#{case.patientAge,jdbcType=VARCHAR}
+                </if>
+                <if test="case.patientGender!=null and case.patientGender !=''">
+                    AND patient_gender=#{case.patientGender,jdbcType=VARCHAR}
+                </if>
+                <if test="case.patientCard!=null and case.patientCard !=''">
+                    AND patient_card=#{case.patientCard,jdbcType=VARCHAR}
+                </if>
+                <if test="case.patientPhone!=null and case.patientPhone !=''">
+                    AND patient_phone=#{case.patientPhone,jdbcType=VARCHAR}
+                </if>
+                <if test="case.isSample!=null and case.isSample !=''">
+                    AND is_sample=#{case.isSample,jdbcType=VARCHAR}
+                </if>
+                <if test="case.creatorId!=null and case.creatorId !=''">
+                    AND creator_id=#{case.creatorId,jdbcType=VARCHAR}
+                </if>
+                <if test="case.creatorName!=null and case.creatorName !=''">
+                    AND creator_name=#{case.creatorName,jdbcType=VARCHAR}
+                </if>
+                <if test="case.isDel!=null and case.isDel !=''">
+                    AND is_del=#{case.isDel,jdbcType=VARCHAR}
+                </if>
+                <if test="case.updateTime!=null">
+                    AND update_time=#{case.updateTime,jdbcType=TIMESTAMP}
+                </if>
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
+</mapper>
