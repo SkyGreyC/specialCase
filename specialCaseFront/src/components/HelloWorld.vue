@@ -1,8 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useMain } from '../store/home'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia';
 
+//首页前端栏
+const router = useRouter()
+const route = useRoute()
+const toHome = () => router.push('/')
+/**
+ * 判断是否为白底背景
+ */
+const isWhiteBg = computed(() => {
+  for (const m of route.matched){
+    if (m.meta && m.meta.whiteBg){
+      return true
+    }
+  }
+  return false
+})
 
 const main = useMain()
 // 解构main里面的state和getters的数据，
@@ -65,6 +81,15 @@ const count = ref(0)
 </script>
 
 <template>
+  <el-container :class="{'white-bg': isWhiteBg}" class="personal-center">
+    <el-header class="custom-space-between" style="border-bottom: var(--custom-border);">
+      <div style="display: flex;padding: 10px 0px;">
+        <div style="width: 228px" class="app-logo">
+          <svg-icon icon="logo" height="24px" width="82px" @click="toHome"></svg-icon>
+        </div>
+      </div>
+    </el-header>
+  </el-container>
   <h1>{{ msg }}</h1>
   <div>counter:{{counter}}</div>
     <div>doubleCount:{{doubleCount}}</div>
@@ -95,7 +120,30 @@ const count = ref(0)
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.personal-center {
+  height: 100vh;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url('@/assets/images/index/bg.png');
+
+  &.white-bg {
+    background: #fff;
+  }
+
+  :deep(.el-backtop){
+    background-color: transparent;
+    box-shadow: none;
+    width: 36px;
+    height: 36px;
+  }
+}
+.app-logo{
+  cursor: pointer;
+  display: flex;
+  padding: 3px 20px;
+  box-sizing: border-box;
+}
 .read-the-docs {
   color: #888;
 }
