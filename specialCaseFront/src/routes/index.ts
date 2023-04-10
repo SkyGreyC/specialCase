@@ -1,13 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
- 
+import Layout from '@/pages/index.vue'
+import backstageRoute from './backstage'
  
 let routes= [
     {
         path: '/',
         name: 'home',
         //使用import可以路由懒加载，如果不使用，太多组件一起加载会造成白屏
-        component: () => import('../components/HelloWorld.vue')
+        // component: () => import('../components/HelloWorld.vue')
+        component: Layout,
     },
+    backstageRoute
     //{
         //配置404页面
         //path: '/:catchAll(.*)',

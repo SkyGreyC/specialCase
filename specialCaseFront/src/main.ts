@@ -2,7 +2,9 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from "./routes/index"
-import { createPinia } from 'pinia' 
+import { createPinia } from 'pinia'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
+import ElementPlus from 'element-plus'
 
 // import 'virtual:svg-icons-register'
 import 'element-plus/dist/index.css'
@@ -13,5 +15,6 @@ const app= createApp(App)
  
 //routes 
 app.use(router)  
-app.use(pinia) 
+app.use(pinia)
+app.use(ElementPlus, { locale }) 
 app.mount('#app')

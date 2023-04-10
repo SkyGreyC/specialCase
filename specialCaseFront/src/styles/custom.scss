@@ -1,16 +1,21 @@
 //自定义样式
-body {
-  --custom-width-page-container: 1280px; //主内容宽度
-  --custom-fill-aliceblue: aliceblue;
-  --custom-fill-dark: #4d535f;
-  --custom-fill-color-text: #f5f7fa;
-  --custom-size-radius: 5px;
-  --custom-size-gap-lg: 30px;
-  --custom-size-gap: 20px;
-  --custom-size-gap-sm: 10px;
-  --custom-reverse-gap-lg: -30px;
-  --custom-reverse-gap: -20px;
-  --custom-reverse-gap-sm: -10px;
-  --custom-border: 1px solid var(--el-border-color);
-  --custom-ratio-golden: 0.618;
+// body {
+//   --custom-width-page-container: 1280px; //主内容宽度
+//   --custom-fill-aliceblue: aliceblue;
+//   --custom-fill-dark: #4d535f;
+//   --custom-fill-color-text: #f5f7fa;
+//   --custom-size-radius: 5px;
+//   --custom-size-gap-lg: 30px;
+//   --custom-size-gap: 20px;
+//   --custom-size-gap-sm: 10px;
+//   --custom-reverse-gap-lg: -30px;
+//   --custom-reverse-gap: -20px;
+//   --custom-reverse-gap-sm: -10px;
+//   --custom-border: 1px solid var(--el-border-color);
+//   --custom-ratio-golden: 0.618;
+// }
+
+.custom-space-between {
+    display: flex;
+    justify-content: space-between;
 }

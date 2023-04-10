@@ -81,15 +81,6 @@ const count = ref(0)
 </script>
 
 <template>
-  <el-container :class="{'white-bg': isWhiteBg}" class="personal-center">
-    <el-header class="custom-space-between" style="border-bottom: var(--custom-border);">
-      <div style="display: flex;padding: 10px 0px;">
-        <div style="width: 228px" class="app-logo">
-          <svg-icon icon="logo" height="24px" width="82px" @click="toHome"></svg-icon>
-        </div>
-      </div>
-    </el-header>
-  </el-container>
   <h1>{{ msg }}</h1>
   <div>counter:{{counter}}</div>
     <div>doubleCount:{{doubleCount}}</div>
