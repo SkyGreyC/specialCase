@@ -19,8 +19,9 @@ type Res<T> = Promise<ItypeAPI<T>>;
 // 但不排除后端返回其它的可能性，
 interface ItypeAPI<T> {
     data: T,//请求的数据，用泛型
-    msg: string | null // 返回状态码的信息，如请求成功等
-    code: number //返回后端自定义的200，404，500这种状态码
+    message: string | null // 返回状态码的信息，如请求成功等
+    code: string //返回后端自定义的200，404，500这种状态码
+    errMessage: string
 }
  
 // 定义接口格式：
@@ -29,8 +30,8 @@ interface ItypeAPI<T> {
 export const LogoutAPI = (): Res<null> => instance.post("/admin/logout");
  
 // post请求，有参数,如传用户名和密码
-export const loginAPI = (data: ReqLogin): Res<string> =>
-    instance.post("/admin/login", data);
+export const loginAPI = (data: ReqLogin): Res<any> =>
+    instance.post("/login/login", data);
  
 // post请求 ，没参数，但要路径传参
 export const StatusAPI = (data: ReqStatus): Res<null> =>

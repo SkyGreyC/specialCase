@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Layout from '@/pages/index.vue'
 import backstageRoute from './backstage'
+import homeRoute from './home'
  
 let routes= [
     {
@@ -10,7 +11,8 @@ let routes= [
         // component: () => import('../components/HelloWorld.vue')
         component: Layout,
     },
-    backstageRoute
+    backstageRoute,
+    homeRoute
     //{
         //配置404页面
         //path: '/:catchAll(.*)',

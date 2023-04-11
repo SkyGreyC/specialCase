@@ -5,7 +5,7 @@ const request = axios.create({
     //填写后端统一的前缀，
     //如：123.xx.xx.xx:456/api/...
     //这个/api是每一个接口都有的，就写它
-    baseURL: '',// 所有的请求地址前缀部分(没有后端请求不用写)
+    baseURL: 'http://localhost:8080',// 所有的请求地址前缀部分(没有后端请求不用写)
     timeout: 80000, // 请求超时时间(毫秒)
     withCredentials: true,// 异步请求携带cookie
     // headers: {

@@ -12,6 +12,7 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
+    "noImplicitAny": false,
     // 配置@别名
     "baseUrl": ".",
     "paths": {

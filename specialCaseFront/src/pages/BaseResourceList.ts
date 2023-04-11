@@ -5,6 +5,6 @@ export default class BaseResourceList extends BasePage{
 
     page = { current: 1, size: 20 }
 
-    loading = false
+    
 
 }

@@ -25,7 +25,7 @@
     <select id="loadByKey" resultMap="image">
         SELECT <include refid="columnsAll"/>
         FROM sc_image
-        WHERE image_id = #{imageId,,jdbcType=VARCHAR}
+        WHERE image_id = #{imageId,jdbcType=VARCHAR}
     </select>
 
     <!-- updateByKey -->
