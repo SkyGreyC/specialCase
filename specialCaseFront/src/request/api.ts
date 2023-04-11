@@ -32,7 +32,11 @@ export const LogoutAPI = (): Res<null> => instance.post("/admin/logout");
 // post请求，有参数,如传用户名和密码
 export const loginAPI = (data: ReqLogin): Res<any> =>
     instance.post("/login/login", data);
- 
+
+// post请求，重置密码
+export const resetAPI = (data: ReqLogin): Res<any> =>
+instance.post("/login/resetPassword", data);
+
 // post请求 ，没参数，但要路径传参
 export const StatusAPI = (data: ReqStatus): Res<null> =>
     instance.post(`/productCategory?ids=${data.id}&navStatus=${data.navStatus}`);

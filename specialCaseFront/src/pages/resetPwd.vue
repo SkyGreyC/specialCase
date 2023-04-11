@@ -13,13 +13,11 @@
             <el-form-item label="密码" prop="password">
                 <el-input v-model="data.form.password"></el-input>
             </el-form-item>
-            <el-form-item v-show="current_menu === 'register'" label="确认密码" prop="password">
+            <el-form-item label="确认密码" prop="password">
                 <el-input v-model="data.form.password"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button @click="submit(data.form)">{{ current_menu === "login" ? "登录" : "注册" }}</el-button>
-                <el-button v-show="current_menu === 'login'" @click="goPage('/resetPwd')">忘记密码</el-button>
-                <!-- <el-button @click="reset(formRef)">重置</el-button> -->
+                <el-button @click="resetPwd(data.form)">修改密码</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -29,7 +27,7 @@
 import { ref, computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '@/store/user';
-import { loginAPI } from '@/request/api'
+import { resetAPI } from '@/request/api'
 
 
 const router = useRouter()
@@ -47,8 +45,7 @@ const data = reactive({
     },
     tab_menu:
         [
-            { type: "login", label: "登录" },
-            { type: "register", label: "注册" },
+            { type: "resetPwd", label: "忘记密码" },
         ]
 })
 
@@ -69,17 +66,12 @@ const rules = {
 }
 
 // 传递参数的方式
-const submit = async (form) => {
+const resetPwd = async (form) => {
     try {
-        let res = await loginAPI(form);
+        let res = await resetAPI(form);
         console.log(res, '测试数据');
         if (res.code === '000') {
-            var userInfo = res.data.userInfo;
-            user.setUserInfo(userInfo);
-            user.setToken(userInfo.userId);
-            token = userInfo.userId;
-            window.localStorage.setItem("token", userInfo.userId);
-            goPage('/home')
+            goPage('/')
         }
     } catch (err) {
         console.log(err)

@@ -63,13 +63,13 @@ public class LoginService {
     public JsonModel resetPassword(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
-            String userId = MapUtils.getString(map,"userId");
+            String userName = MapUtils.getString(map,"userName");
             String password = MapUtils.getString(map,"password");
             if(CommonUtils.isNull(password)){
                 model.msgError("重置失败，密码为空");
                 return model;
             }
-            userLogic.resetPassword(userId,password);
+            userLogic.resetPassword(userName,password);
             model.msgSuccess("重置用户密码成功");
             return model;
         }catch(Exception e){

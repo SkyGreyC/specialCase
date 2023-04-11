@@ -33,9 +33,8 @@ public class UserLogic {
      * 重置用户密码
      */
     @Transactional
-    public int resetPassword(String userId,String password){
-        UserEntity entity = new UserEntity();
-        entity.setUserId(userId);
+    public int resetPassword(String userName,String password){
+        UserEntity entity = this.getUserInfo(userName);
         entity.setPassword(password);
         return userMapper.updateByKey(entity);
     }

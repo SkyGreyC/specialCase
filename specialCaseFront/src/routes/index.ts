@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Layout from '@/pages/index.vue'
+import ResetPwd from '@/pages/resetPwd.vue'
 import backstageRoute from './backstage'
 import homeRoute from './home'
  
@@ -10,6 +11,11 @@ let routes= [
         //使用import可以路由懒加载，如果不使用，太多组件一起加载会造成白屏
         // component: () => import('../components/HelloWorld.vue')
         component: Layout,
+    },
+    {
+        path: '/resetPwd',
+        name: 'resetPwd',
+        component: ResetPwd,
     },
     backstageRoute,
     homeRoute
