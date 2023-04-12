@@ -1,0 +1,90 @@
+.backstage-center {
+    --backstage-fill-color: #f3f6f7;
+
+    height: 100vh;
+    background-color: var(--el-fill-color-blank);
+
+    .page-table {
+        .toolbar {
+            margin-bottom:  10px;
+        }
+        .el-form {
+            .el-form-item {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .el-form-item__label {
+                font-weight: 300;
+                color: var(--el-text-color-secondary);
+                font-size: 14px;
+            }
+        }
+    }
+    //自定义样式调整
+    .custom-row {
+        --custom-gutter: 50;
+    }
+    //Element-Plus样式调整
+    .el-aside {
+        background-color: var(--backstage-fill-color);
+        .el-menu {
+            --el-menu-bg-color: var(--backstage-fill-color);
+        }
+    }
+    .el-header {
+        --el-header-padding: 0 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .el-main {
+        --el-main-padding: var(--custom-size-gap-sm) var(--custom-size-gap-lg);
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+    .el-tabs__nav-wrap::after {
+        display: none;
+    }
+    .el-tabs__item {
+        height: 32px;
+        line-height: 32px;
+        font-weight: 700;
+        color: var(--el-color-regular);
+        &.is-active {
+            color: var(--el-color-primary);
+        }
+    }
+    .el-table {
+        thead {
+            color: var(--el-text-color-regular);
+        }
+        td.el-table__cell, th.el-table__cell.is-leaf {
+            border-bottom: 0;
+        }
+        .el-table__inner-wrapper::before {
+            display: none;
+        }
+        th.el-table__cell {
+            background-color: var(--backstage-fill-color);
+        }
+        td.el-table__cell {
+            .el-link + .el-link {
+                margin-left: 10px;
+            }
+        }
+    }
+    .el-form {
+        .el-form-item__label {
+            font-weight: 700;
+            color: var(--el-text-color-regular);
+            font-size: 15px;
+        }
+        .el-textarea, .el-input, .el-date-editor {
+            --el-input-border-color: #fff;
+            --el-input-hover-border-color: #fff;
+            --el-input-bg-color: var(--custom-fill-color-text);
+        }
+        .el-date-editor {
+            background-color: var(--el-input-bg-color);
+        }
+    }
+}

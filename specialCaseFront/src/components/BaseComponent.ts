@@ -1,7 +1,6 @@
 import { Vue } from 'vue-class-component'
 import { ElementPlus } from '@/utils/ElementPlus'
 import { Utils } from '@/utils/Utils'
-import { getVForSourceType } from '@/__VLS_types'
 // import { getStore } from '@/store'
 
 export default class BaseComponent extends Vue {

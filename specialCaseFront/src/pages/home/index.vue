@@ -34,7 +34,14 @@
                 </div>
             </div>
         </el-header>
-        <el-main>首页内容
+        <el-main>
+            <div class="section section-dark" style="margin-bottom: 80px;">
+                <div class="section-head">
+                    <p class="section-subtext">首页介绍</p>
+                    <p class="section-title">多类型案例介绍</p>
+                </div>
+                <CaseSection />
+            </div>
         </el-main>
         <el-footer>版权所有</el-footer>
     </el-container>
@@ -42,6 +49,7 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
+import CaseSection from './CaseSection.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '@/store/user';
 
@@ -90,6 +98,33 @@ const isWhiteBg = computed(() => {
     color: #333;
     text-align: center;
     line-height: 160px;
+}
+
+.section {
+    .section-head {
+        margin: var(--custom-size-gap-lg) 0;
+        text-align: center;
+    }
+
+    .section-subtext {
+        margin: var(--custom-size-gap-sm) 0;
+        opacity: 0.6;
+    }
+
+    .section-title {
+        margin: var(--custom-size-gap-sm) 0;
+        font-size: 32px;
+        font-weight: 500;
+    }
+
+    &.section-dark {
+        background-color: var(--custom-fill-dark);
+        padding: 30px 0;
+
+        .section-head {
+            color: #fff;
+        }
+    }
 }
 
 // .personal-center {

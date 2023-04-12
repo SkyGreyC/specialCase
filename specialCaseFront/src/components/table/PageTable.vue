@@ -1,7 +1,9 @@
-<!-- <template>
-    <div class=''>
+<template>
+    <div class='page-table'>
+        <slot name="topbar" />
         <el-table :data="data.records" height="100%" @selection-change="handleSelectionChange">
             <el-table-column v-if="multiple" type="selection" width="40px" />
+            <slot />
         </el-table>
         <div style="width: 100%;margin-top: 10px;">
             <el-pagination :page-size="page.size" :current-page="page.current" :total="data.total"
@@ -9,12 +11,15 @@
                 @size-change="setPageSize" @current-change="setPageCurrent" />
         </div>
         <div v-if="selection.length">
-            <span>当前已选择{{ selection.length }}项</span>
+            <span class="custom-subtext">当前已选择{{ selection.length }}项</span>
+            <div>
+                <slot name="bottombar" />
+            </div>
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import BaseComponent from "@/components/BaseComponent"
 import { Options, Prop } from 'vue-property-decorator'
 
@@ -22,7 +27,7 @@ import { Options, Prop } from 'vue-property-decorator'
     name: 'PageTable',
     emits: ['page-change', 'selection-change']
 })
-    export default PageTable extends BaseComponent {
+export default class PageTable extends BaseComponent {
     @Prop({ default: () => ({ records: [], total: 0 }) })
     data
 
@@ -34,6 +39,22 @@ import { Options, Prop } from 'vue-property-decorator'
 
     selection = []
 
+    setPageSize(size) {
+        this.page.size = size
+        this.page.current = 1
+        this.$emit('page-change', this.page)
+    }
+
+    setPageCurrent(current) {
+        this.page.current = current
+        this.$emit('page-change', this.page)
+    }
+
+    handleSelectionChange(selection) {
+        this.selection = selection
+        this.$emit('selection-change', selection)
+    }
+
 }
 </script>
-<style lang='scss' scoped></style> -->
+<style lang='scss' scoped></style>

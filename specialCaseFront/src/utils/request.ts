@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { getToken } from './token'
 
-export const BASE_URL = import.meta.env.VITE_BASE_URL
+// export const BASE_URL = import.meta.env.VITE_BASE_URL
+export const BASE_URL = 'http://localhost:8080'
 
 export function setHeaders(headers = {}) {
     Object.assign(headers, getToken())
