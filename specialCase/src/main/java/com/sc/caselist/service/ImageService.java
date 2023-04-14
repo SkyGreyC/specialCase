@@ -78,7 +78,7 @@ public class ImageService {
     }
 
     /**
-     * 上传单个文件
+     * 下载单个文件
      * @param imageId
      * @param response
      * @return

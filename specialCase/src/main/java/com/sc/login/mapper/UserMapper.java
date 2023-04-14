@@ -16,9 +16,19 @@ public interface UserMapper {
     UserEntity getUserInfo(@Param("user") UserEntity entity);
 
     /**
+     * 通过userId获取用户
+     */
+    UserEntity findUserByUserId(@Param("user") UserEntity entity);
+
+    /**
      * 修改用户
      */
     int updateByKey(@Param("user") UserEntity entity);
+
+    /**
+     * 删除用户
+     */
+    int deleteByUserId(@Param("user") UserEntity entity);
 
     /**
      * 新增用户

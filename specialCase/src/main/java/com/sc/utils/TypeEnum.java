@@ -65,7 +65,7 @@ public class TypeEnum {
         /**
          * 不是管理员
          */
-        NO("02");
+        NO("03");
 
         private String flag;
 

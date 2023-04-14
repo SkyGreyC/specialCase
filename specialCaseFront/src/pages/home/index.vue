@@ -17,7 +17,7 @@
                         popper-class="custom-popover">
                         <template #reference>
                             <el-link :underline="false" style="margin-left: 30px;line-height: 32px;">
-                                <span style="margin-left:10px;">{{ userInfo.userName }} </span>
+                                <span style="margin-left:10px;">{{ userInfo.nickName }} </span>
                             </el-link>
                         </template>
                         <div class="personal-card">

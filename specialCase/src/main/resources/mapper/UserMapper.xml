@@ -25,6 +25,13 @@
         WHERE user_name=#{user.userName} and is_del=#{user.isDel}
     </select>
 
+    <!-- 通过userId查询用户信息 -->
+    <select id="findUserByUserId" resultMap="user">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_user
+        WHERE user_id=#{user.userId} and is_del=#{user.isDel}
+    </select>
+
     <update id="updateByKey">
         UPDATE sc_user
         <set>
@@ -137,5 +144,11 @@
         </where>
         ORDER BY create_time DESC
     </select>
+
+    <update id="deleteByUserId">
+        UPDATE sc_user
+        SET is_del=#{user.isDel,jdbcType=VARCHAR}
+        WHERE user_id=#{user.userId}
+    </update>
 
 </mapper>

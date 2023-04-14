@@ -30,6 +30,17 @@ public class UserLogic {
     }
 
     /**
+     * 通过userId获取用户
+     */
+    public UserEntity findUserByUserId(String userId){
+        UserEntity entity = new UserEntity();
+        entity.setUserId(userId);
+        entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+        UserEntity user = userMapper.findUserByUserId(entity);
+        return user;
+    }
+
+    /**
      * 重置用户密码
      */
     @Transactional
@@ -53,10 +64,26 @@ public class UserLogic {
     }
 
     /**
+     * 新增或修改用户
+     */
+    @Transactional
+    public int saveUser(UserEntity entity){
+        if(CommonUtils.isNull(entity.getUserId())){
+            entity.setUserId(CommonUtils.getUUID());
+            //设置默认密码为000000
+            entity.setPassword("000000");
+            entity.setAdminType(TypeEnum.ADMIN_TYPE.NO.toString());
+            entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+            return userMapper.insertUser(entity);
+        }else{
+            return userMapper.updateByKey(entity);
+        }
+    }
+
+    /**
      * 获取用户列表
      */
-    public List<UserEntity> findUserList(Page<UserVO> page){
-        UserEntity entity = new UserEntity();
+    public List<UserEntity> findUserList(Page<UserVO> page, UserEntity entity){
         entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
         return userMapper.findByWhere(page,entity);
     }
@@ -73,9 +100,11 @@ public class UserLogic {
      * 删除用户
      */
     @Transactional
-    public int deleteUser(UserEntity entity){
-        entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
-        return userMapper.updateByKey(entity);
+    public int deleteUser(String userId){
+        UserEntity entity = new UserEntity();
+        entity.setUserId(userId);
+        entity.setIsDel(TypeEnum.IS_DEL.YES.toString());
+        return userMapper.deleteByUserId(entity);
     }
 
     /**

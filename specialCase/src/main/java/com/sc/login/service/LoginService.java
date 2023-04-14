@@ -98,6 +98,26 @@ public class LoginService {
     }
 
     /*
+     * 新增或修改用户
+     * */
+    @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
+    public JsonModel saveUser(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            if(CommonUtils.isAnyNull(userVO.getUserName(),userVO.getUserType())){
+                model.msgError("保存失败，用户名或用户类型为空");
+                return model;
+            }
+            userLogic.saveUser(MapToBean.toBean(userVO,UserEntity.class));
+            model.msgSuccess("保存用户成功");
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
      * 获取用户列表
      * */
     @RequestMapping(value = "/findUserList",method = RequestMethod.POST)
@@ -105,8 +125,25 @@ public class LoginService {
         try{
             JsonModel model = new JsonModel();
             Page<UserVO> page = MapToBean.getPage(map,"page",UserVO.class);
-            List<UserEntity> data = userLogic.findUserList(page);
+            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            List<UserEntity> data = userLogic.findUserList(page, MapToBean.toBean(userVO,UserEntity.class));
             model.msgSuccess("获取用户列表成功",MapToBean.toList(data,UserVO.class),page);
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 通过userId获取用户
+     * */
+    @RequestMapping(value = "/findUserByUserId",method = RequestMethod.POST)
+    public JsonModel findUserByUserId(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            String userId = MapUtils.getString(map,"userId");
+            UserEntity data = userLogic.findUserByUserId(userId);
+            model.msgSuccess("获取用户信息成功",MapToBean.toBean(data,UserVO.class));
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());
@@ -140,12 +177,12 @@ public class LoginService {
     public JsonModel deleteUser(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
-            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
-            if(CommonUtils.isNull(userVO.getUserId())){
+            String userId = MapUtils.getString(map,"userId");
+            if(CommonUtils.isNull(userId)){
                 model.msgError("删除失败，用户id为空");
                 return model;
             }
-            userLogic.deleteUser(MapToBean.toBean(userVO,UserEntity.class));
+            userLogic.deleteUser(userId);
             model.msgSuccess("删除用户成功");
             return model;
         }catch(Exception e){
