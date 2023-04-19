@@ -17,3 +17,5 @@ export class Image {
         return null
     }
 }
+
+export default new Image()

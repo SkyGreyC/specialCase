@@ -1,6 +1,6 @@
 package com.sc.login.logic;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sc.login.mapper.UserMapper;
 import com.sc.login.service.vo.UserVO;
 import com.sc.utils.CommonUtils;
@@ -83,9 +83,10 @@ public class UserLogic {
     /**
      * 获取用户列表
      */
-    public List<UserEntity> findUserList(Page<UserVO> page, UserEntity entity){
+    public List<UserEntity> findUserList(IPage<?> page, UserEntity entity){
         entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
-        return userMapper.findByWhere(page,entity);
+        List<UserEntity> userEntities = userMapper.findByWhere(page,entity);
+        return userEntities;
     }
 
     /**

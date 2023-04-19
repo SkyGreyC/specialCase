@@ -33,5 +33,5 @@ public interface ImageMapper {
     /**
      * 删除关联附件信息
      */
-    int deleteImageInfoById(@Param("image") String resourceId);
+    int deleteImageInfoById(@Param("resourceId") String resourceId);
 }

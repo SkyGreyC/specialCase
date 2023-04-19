@@ -18,7 +18,7 @@
 
     <sql id="columnsAll">
         image_id,resource_id,resource_type,image_name,image_suffix,image_size,
-        creator_id,creatorName,is_del,update_time
+        creator_id,creator_name,is_del,update_time
     </sql>
 
     <!-- loadByKey -->

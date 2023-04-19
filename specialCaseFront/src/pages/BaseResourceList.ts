@@ -5,6 +5,25 @@ export default class BaseResourceList extends BasePage{
 
     page = { current: 1, size: 20 }
 
+    search = { tracer: '' }
+
+    selection = []
     
+    reload(clear) {
+        if (clear) {
+            this.search.tracer = ''
+            this.tableData = { records: [], total: 0 }
+        }
+        this.page.current = 1
+        this.doQuery()
+    }
+
+    setSelection(selection) {
+        this.selection = selection
+    }
+
+    async doQuery() {
+        
+    }
 
 }

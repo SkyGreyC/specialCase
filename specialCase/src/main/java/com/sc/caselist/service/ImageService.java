@@ -2,13 +2,11 @@ package com.sc.caselist.service;
 
 import com.sc.caselist.logic.ImageLogic;
 import com.sc.caselist.service.vo.ImageVO;
-import com.sc.home.service.vo.HomeVO;
 import com.sc.login.service.vo.UserVO;
 import com.sc.utils.CommonUtils;
 import com.sc.utils.JsonModel;
 import com.sc.utils.MapToBean;
 import com.sc.utils.TypeEnum;
-import com.sc.utils.entity.HomeEntity;
 import com.sc.utils.entity.ImageEntity;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,44 +33,42 @@ public class ImageService {
 
     /**
      * 上传单个文件
-     * @param upload
-     * @param resourceType
+     * @param file
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/uploadFile",method = RequestMethod.POST)
-    public JsonModel uploadFile(MultipartFile upload, String resourceType,
-                                String resourceId) throws IOException {
+    public JsonModel uploadFile(MultipartFile file) throws IOException {
         JsonModel model = new JsonModel();
         //获取上传文件名称
-        String filename = upload.getOriginalFilename();
+        String filename = file.getOriginalFilename();
 //      String path="D:/code/specialCase/image/"+resourceId+"/";
-        String path="C:/CYT/code/image/"+resourceId+"/";
+        String path="C:/CYT/code/image/";
         //判断该路径是否存在
-        File file = new File(path);
-        if (!file.exists()) {
+        File file1 = new File(path);
+        if (!file1.exists()) {
             //如果这个文件夹不存在的话,就创建这个文件
-            file.mkdirs();
+            file1.mkdirs();
         }
-        if(CommonUtils.isNull(resourceType)){
-            model.msgError("上传单个文件失败，图片类型为空");
-            return model;
-        }else if(resourceType.equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
-            //nothing
-        }else if(resourceType.equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
-            filename = "label.png";
-        }else{
-//          path="D:/code/specialCase/image/other/";
-            path="C:/CYT/code/image/other/";
-        }
+//        if(CommonUtils.isNull(resourceType)){
+//            model.msgError("上传单个文件失败，图片类型为空");
+//            return model;
+//        }else if(resourceType.equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
+//            filename = resourceId+".png";
+//        }else if(resourceType.equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
+//            filename = "label.png";
+//        }else{
+////          path="D:/code/specialCase/image/other/";
+//            path="C:/CYT/code/image/other/";
+//        }
         //完成文件上传
-        upload.transferTo(new File(path, filename));
+        file.transferTo(new File(path, filename));
         ImageVO imageVO = new ImageVO();
-        imageVO.setResourceId(resourceId);
-        imageVO.setResourceType(resourceType);
-        imageVO.setImageName(upload.getOriginalFilename());
-        imageVO.setImageSuffix(upload.getOriginalFilename().substring(upload.getOriginalFilename().lastIndexOf(".")));
-        imageVO.setImageSize(upload.getSize());
+//        imageVO.setResourceId(resourceId);
+//        imageVO.setResourceType(resourceType);
+        imageVO.setImageName(filename);
+        imageVO.setImageSuffix(filename.substring(filename.lastIndexOf(".")));
+        imageVO.setImageSize(file.getSize());
         model.msgSuccess("上传单个文件成功",imageVO);
         return model;
     }
@@ -85,7 +81,7 @@ public class ImageService {
      * @throws IOException
      */
     @RequestMapping(value = "/downloadFile",method = RequestMethod.GET)
-    public void download(String imageId, HttpServletResponse response){
+    public void downloadFile(String imageId, HttpServletResponse response){
         try {
             ImageEntity imageEntity = imageLogic.loadByKey(imageId);
             if(CommonUtils.isNull(imageEntity)){
@@ -95,7 +91,7 @@ public class ImageService {
             if(imageEntity.getResourceType().equals(TypeEnum.RESOURCE_TYPE.HOME.toString())){
                 basePath+="other/";
             }else{
-                basePath+=imageEntity.getResourceId();
+                basePath+=imageEntity.getResourceId()+"/";
             }
             String name=imageEntity.getImageName();
             // 1、定义输入流，通过输入流读取文件内容
