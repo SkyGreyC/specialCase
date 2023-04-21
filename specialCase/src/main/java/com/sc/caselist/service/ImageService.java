@@ -41,7 +41,9 @@ public class ImageService {
     public JsonModel uploadFile(MultipartFile file) throws IOException {
         JsonModel model = new JsonModel();
         //获取上传文件名称
-        String filename = file.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();
+        String imageId = CommonUtils.getUUID();
+        String filename = imageId+originalFilename.substring(originalFilename.lastIndexOf("."));
 //      String path="D:/code/specialCase/image/"+resourceId+"/";
         String path="C:/CYT/code/image/";
         //判断该路径是否存在
@@ -50,22 +52,10 @@ public class ImageService {
             //如果这个文件夹不存在的话,就创建这个文件
             file1.mkdirs();
         }
-//        if(CommonUtils.isNull(resourceType)){
-//            model.msgError("上传单个文件失败，图片类型为空");
-//            return model;
-//        }else if(resourceType.equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
-//            filename = resourceId+".png";
-//        }else if(resourceType.equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
-//            filename = "label.png";
-//        }else{
-////          path="D:/code/specialCase/image/other/";
-//            path="C:/CYT/code/image/other/";
-//        }
         //完成文件上传
         file.transferTo(new File(path, filename));
         ImageVO imageVO = new ImageVO();
-//        imageVO.setResourceId(resourceId);
-//        imageVO.setResourceType(resourceType);
+        imageVO.setImageId(imageId);
         imageVO.setImageName(filename);
         imageVO.setImageSuffix(filename.substring(filename.lastIndexOf(".")));
         imageVO.setImageSize(file.getSize());

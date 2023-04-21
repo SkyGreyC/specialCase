@@ -4,6 +4,7 @@ import FullPanel from './full-panel/FullPanel.vue'
 import ImageUploader from './form-items/ImageUploader.vue'
 import FileUploader from './form-items/FileUploader.vue'
 import Base64Image from './file-widgets/Base64Image.vue'
+import ImageItems from './image-items/ImageItems.vue'
 
 const components = [
     PageTable,
@@ -11,7 +12,8 @@ const components = [
     FullPanel,
     ImageUploader,
     FileUploader,
-    Base64Image
+    Base64Image,
+    ImageItems
 ]
 
 const install = (Vue) => {
