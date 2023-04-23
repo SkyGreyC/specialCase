@@ -10,6 +10,7 @@ import com.sc.utils.MapToBean;
 import com.sc.utils.TypeEnum;
 import com.sc.utils.entity.CaseEntity;
 import com.sc.utils.entity.LesionEntity;
+import com.sc.utils.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +27,17 @@ public class LesionLogic {
      * 新增多个病灶
      */
     @Transactional
-    public int insertLesions(List<LesionVO> lesions, UserVO userVO,String caseId){
+    public int insertLesions(List<LesionVO> lesions, UserEntity user, String caseId){
         int res=0;
+        if(lesions.size()==0){
+            return res;
+        }
         List<LesionEntity> entities = MapToBean.toList(lesions,LesionEntity.class);
         for(LesionEntity entity:entities){
             entity.setLesionId(CommonUtils.getUUID());
             entity.setCaseId(caseId);
-            entity.setCreatorId(userVO.getUserId());
-            entity.setCreatorName(userVO.getUserName());
+            entity.setCreatorId(user.getUserId());
+            entity.setCreatorName(user.getUserName());
             entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
             res+=lesionMapper.insertLesion(entity);
         }
@@ -44,20 +48,20 @@ public class LesionLogic {
      * 修改多个病灶
      */
     @Transactional
-    public int updateLesions(List<LesionVO> lesions, UserVO userVO,String caseId){
+    public int updateLesions(List<LesionVO> lesions, UserEntity user,String caseId){
         int res=0;
         List<LesionEntity> entities = MapToBean.toList(lesions,LesionEntity.class);
         for(LesionEntity entity:entities){
             if(CommonUtils.isNull(entity.getLesionId())){
                 entity.setLesionId(CommonUtils.getUUID());
                 entity.setCaseId(caseId);
-                entity.setCreatorId(userVO.getUserId());
-                entity.setCreatorName(userVO.getUserName());
+                entity.setCreatorId(user.getUserId());
+                entity.setCreatorName(user.getUserName());
                 entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
                 res+=lesionMapper.insertLesion(entity);
             }else{
-                entity.setCreatorId(userVO.getUserId());
-                entity.setCreatorName(userVO.getUserName());
+                entity.setCreatorId(user.getUserId());
+                entity.setCreatorName(user.getUserName());
                 entity.setUpdateTime(CommonUtils.getNow());
                 res+=lesionMapper.updateByKey(entity);
             }

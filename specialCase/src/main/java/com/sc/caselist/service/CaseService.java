@@ -29,20 +29,20 @@ public class CaseService {
     private CaseLogic caseLogic;
 
     /*
-     * 新增单个病例
+     * 新增或修改单个病例
      * */
-    @RequestMapping(value = "/insertCase",method = RequestMethod.POST)
-    public JsonModel insertCase(@RequestBody Map<String, Object> map){
+    @RequestMapping(value = "/saveCase",method = RequestMethod.POST)
+    public JsonModel saveCase(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
             CaseVO caseVO = MapToBean.getObject(map,"caseVO",CaseVO.class);
-            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
+            String userId = MapUtils.getString(map,"userId");
             if(CommonUtils.isAnyNull(caseVO.getCaseTitle(),caseVO.getDiagnosis())){
-                model.msgError("新增单个病例失败，有内容为空");
+                model.msgError("保存单个病例失败，有内容为空");
                 return model;
             }
-            String data = caseLogic.insertCase(caseVO,userVO);
-            model.msgSuccess("新增单个病例成功",data);
+            String data = caseLogic.saveCase(caseVO,userId);
+            model.msgSuccess("保存单个病例成功",data);
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());
@@ -77,13 +77,12 @@ public class CaseService {
     public JsonModel deleteCase(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
-            CaseVO caseVO = MapToBean.getObject(map,"caseVO",CaseVO.class);
-            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
-            if(CommonUtils.isNull(caseVO.getCaseId())){
+            String caseId = MapUtils.getString(map,"caseId");
+            if(CommonUtils.isNull(caseId)){
                 model.msgError("删除单个病例失败，id为空");
                 return model;
             }
-            caseLogic.deleteCase(caseVO,userVO);
+            caseLogic.deleteCase(caseId);
             model.msgSuccess("删除单个病例成功");
             return model;
         }catch(Exception e){
@@ -99,8 +98,9 @@ public class CaseService {
         try{
             JsonModel model = new JsonModel();
             Page<CaseVO> page = MapToBean.getPage(map,"page",CaseVO.class);
-            List<CaseEntity> data = caseLogic.findCaseList(page);
-            model.msgSuccess("获取病例列表成功",MapToBean.toList(data,CaseVO.class),page);
+            String userId = MapUtils.getString(map,"userId");
+            List<CaseVO> data = caseLogic.findCaseList(page,userId);
+            model.msgSuccess("获取病例列表成功",data,page);
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());
@@ -115,7 +115,8 @@ public class CaseService {
         try{
             JsonModel model = new JsonModel();
             String caseId = MapUtils.getString(map,"caseId");
-            CaseVO data = caseLogic.findCaseDetail(caseId);
+            String userId = MapUtils.getString(map,"userId");
+            CaseVO data = caseLogic.findCaseDetail(caseId,userId);
             model.msgSuccess("获取病例详情成功",data);
             return model;
         }catch(Exception e){

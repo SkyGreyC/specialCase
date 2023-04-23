@@ -48,7 +48,11 @@ public class CaseVO {
 
     private String updateTime;
 
+    private String isMarked;
+
     private List<LesionVO> lesionVOs;
+
+    private List<ImageVO> imageVOs;
 
     public String getCaseId() {
         return caseId;
@@ -226,11 +230,27 @@ public class CaseVO {
         this.updateTime = updateTime;
     }
 
+    public String getIsMarked() {
+        return isMarked;
+    }
+
+    public void setIsMarked(String isMarked) {
+        this.isMarked = isMarked;
+    }
+
     public List<LesionVO> getLesionVOs() {
         return lesionVOs;
     }
 
     public void setLesionVOs(List<LesionVO> lesionVOs) {
         this.lesionVOs = lesionVOs;
+    }
+
+    public List<ImageVO> getImageVOs() {
+        return imageVOs;
+    }
+
+    public void setImageVOs(List<ImageVO> imageVOs) {
+        this.imageVOs = imageVOs;
     }
 }

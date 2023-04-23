@@ -22,6 +22,7 @@ public class LesionVO {
 
     private String updateTime;
 
+
     public String getLesionId() {
         return lesionId;
     }

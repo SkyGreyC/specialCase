@@ -24,4 +24,9 @@ public interface MarkMapper {
      * 查询信息
      */
     List<MarkEntity> findByWhere(IPage<?> page, @Param("mark") MarkEntity entity);
+
+    /**
+     * 查询信息
+     */
+    MarkEntity findByUserIdAndCaseId(@Param("caseId") String caseId,@Param("userId") String userId);
 }

@@ -78,12 +78,12 @@ public class ImageService {
                 throw new Exception("未找到附件");
             }
             String basePath="C:/CYT/code/image/";
-            if(imageEntity.getResourceType().equals(TypeEnum.RESOURCE_TYPE.HOME.toString())){
-                basePath+="other/";
-            }else{
-                basePath+=imageEntity.getResourceId()+"/";
-            }
-            String name=imageEntity.getImageName();
+//            if(imageEntity.getResourceType().equals(TypeEnum.RESOURCE_TYPE.HOME.toString())){
+//                basePath+="other/";
+//            }else{
+//                basePath+=imageEntity.getResourceId()+"/";
+//            }
+            String name=imageId+imageEntity.getImageSuffix();
             // 1、定义输入流，通过输入流读取文件内容
             FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
             // 2、通过response对象，获取到输出流
@@ -139,8 +139,8 @@ public class ImageService {
                 model.msgNullRecord("无绑定附件");
                 return model;
             }
-            int result = imageLogic.saveImageInfo(imageVOs,userVO);
-            model.msgSuccess("保存关联关系,成功个数:"+result);
+//            int result = imageLogic.saveImageInfo(imageVOs,userVO);
+//            model.msgSuccess("保存关联关系,成功个数:"+result);
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());

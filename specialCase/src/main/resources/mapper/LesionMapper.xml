@@ -18,7 +18,7 @@
 
     <sql id="columnsAll">
         lesion_id,case_id,lesion_name,lesion_location,lesion_info,lesion_type,
-        creator_id,creatorName,is_del,update_time
+        creator_id,creator_name,is_del,update_time
     </sql>
 
     <!-- updateByKey -->

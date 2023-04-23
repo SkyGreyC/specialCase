@@ -8,13 +8,13 @@
         <result property="caseTitle" column="case_title" jdbcType="VARCHAR"/>
         <result property="imageType" column="image_type" jdbcType="VARCHAR"/>
         <result property="scanType" column="scan_type" jdbcType="VARCHAR"/>
-        <result property="clinical" column="clinical_history" jdbcType="VARCHAR"/>
+        <result property="clinical" column="clinical" jdbcType="VARCHAR"/>
         <result property="clinicalHistory" column="clinical_history" jdbcType="VARCHAR"/>
         <result property="machine" column="machine" jdbcType="VARCHAR"/>
         <result property="tracer" column="tracer" jdbcType="VARCHAR"/>
         <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
         <result property="isTransfer" column="is_transfer" jdbcType="VARCHAR"/>
-        <result property="opinion" column="clinical_history" jdbcType="VARCHAR"/>
+        <result property="opinion" column="opinion" jdbcType="VARCHAR"/>
         <result property="diagnosis" column="diagnosis" jdbcType="VARCHAR"/>
         <result property="patientId" column="patient_id" jdbcType="VARCHAR"/>
         <result property="patientAge" column="patient_age" jdbcType="VARCHAR"/>
@@ -321,6 +321,13 @@
             </if>
         </where>
         ORDER BY update_time DESC
+    </select>
+
+    <!-- loadByKey -->
+    <select id="loadByKey" resultMap="case">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_case
+        WHERE case_id = #{caseId,jdbcType=VARCHAR}
     </select>
 
 </mapper>

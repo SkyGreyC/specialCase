@@ -14,6 +14,8 @@ public class CaseEntity {
 
     private String scanType;
 
+    private String clinical;
+
     private String clinicalHistory;
 
     private String machine;
@@ -24,6 +26,7 @@ public class CaseEntity {
 
     private String isTransfer;
 
+    private String opinion;
     private String diagnosis;
 
     private String patientId;
@@ -79,6 +82,14 @@ public class CaseEntity {
         this.scanType = scanType;
     }
 
+    public String getClinical() {
+        return clinical;
+    }
+
+    public void setClinical(String clinical) {
+        this.clinical = clinical;
+    }
+
     public String getClinicalHistory() {
         return clinicalHistory;
     }
@@ -117,6 +128,14 @@ public class CaseEntity {
 
     public void setIsTransfer(String isTransfer) {
         this.isTransfer = isTransfer;
+    }
+
+    public String getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
     }
 
     public String getDiagnosis() {

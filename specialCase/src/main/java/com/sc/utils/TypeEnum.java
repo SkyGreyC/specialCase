@@ -117,4 +117,24 @@ public class TypeEnum {
 
         public String toString() { return flag; }
     }
+
+    /**
+     * 是否收藏
+     */
+    public static enum IS_MARKED{
+        /**
+         * 是
+         */
+        YES("00"),
+        /**
+         * 不是
+         */
+        NO("01");
+
+        private String flag;
+
+        private IS_MARKED(String flag) { this.flag=flag; }
+
+        public String toString() { return flag; }
+    }
 }

@@ -99,4 +99,11 @@
         ORDER BY create_time DESC
     </select>
 
+    <!-- loadByKey -->
+    <select id="findByUserIdAndCaseId" resultMap="mark">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_mark
+        WHERE case_id = #{caseId,jdbcType=VARCHAR} and user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

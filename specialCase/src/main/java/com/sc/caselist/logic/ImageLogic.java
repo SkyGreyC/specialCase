@@ -11,6 +11,7 @@ import com.sc.utils.TypeEnum;
 import com.sc.utils.entity.CaseEntity;
 import com.sc.utils.entity.HomeEntity;
 import com.sc.utils.entity.ImageEntity;
+import com.sc.utils.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,17 +45,26 @@ public class ImageLogic {
      * 保存关联关系
      */
     @Transactional
-    public int saveImageInfo(List<ImageVO> imageVOs, UserVO userVO){
+    public int saveImageInfo(List<ImageVO> imageVOs, UserEntity user, String caseId){
         //先删除之前的关联附件信息
-        this.deleteImageInfoById(imageVOs.get(0).getResourceId());
+        if(CommonUtils.isNotNull(caseId)){
+            this.deleteImageInfoById(caseId);
+        }
         int res=0;
         List<ImageEntity> imageEntities = MapToBean.toList(imageVOs,ImageEntity.class);
         for(ImageEntity entity:imageEntities){
-            entity.setImageId(CommonUtils.getUUID());
-            entity.setCreatorId(userVO.getUserId());
-            entity.setCreatorName(userVO.getUserName());
-            entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
-            res+=imageMapper.insertImage(entity);
+            if(CommonUtils.isNull(entity.getResourceId())){
+                entity.setResourceId(caseId);
+                entity.setCreatorId(user.getUserId());
+                entity.setCreatorName(user.getUserName());
+                entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+                res+=imageMapper.insertImage(entity);
+            } else {
+                entity.setCreatorId(user.getUserId());
+                entity.setCreatorName(user.getUserName());
+                entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+                res+=imageMapper.updateByKey(entity);
+            }
         }
         return res;
     }
