@@ -41,6 +41,15 @@
                     <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit />
                 </el-form-item>
             </div>
+            <el-form-item v-bind="$plus.attrFormItem('lesionVOs', '病灶信息')" class="custom-col-2">
+                    <!-- <div v-if="readonly" class="custom-readonly">{{ formData.patientGender }}</div> -->
+                    <div v-for="item in lesionVOs" :key="item.lesionInfo">
+                        <el-input v-model="item.lesionLocation" class="el-input" placeholder="请填写病灶位置"></el-input>
+                        <el-input v-model="item.lesionInfo" class="el-input" placeholder="请填写病灶信息"></el-input>
+                        <el-button @click="addInput">添加</el-button>
+                    </div>
+                    <!-- <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit /> -->
+                </el-form-item>
             <div class="custom-row">
                 <el-form-item v-bind="$plus.attrFormItem('imageVOs01', '病灶图', !readonly)" class="custom-col-2">
                     <file-uploader v-if="!readonly" v-model="formData.imageVOs01" :show-file-list="false"
@@ -73,6 +82,7 @@
                 </template>
             </toolbar>
         </template>
+        
     </full-panel>
 </template>
 
@@ -92,6 +102,10 @@ export default class CaseEditor extends BasePage {
     saveLoading = false
 
     formData: any = {}
+
+    lesionVOs = [
+        { lesionLocation: '', lesionInfo: '' }
+    ]
 
     FILE_TYPE = {
         MASTER: '00',
@@ -133,6 +147,11 @@ export default class CaseEditor extends BasePage {
         this.loading = false
     }
 
+    // 动态添加
+    addInput () {
+      this.lesionVOs.push({ lesionLocation: '', lesionInfo: '' })
+    }
+
     async doSave() {
         const valid = await (this.$refs.form as any).validate()
         if (!valid) {
@@ -141,18 +160,21 @@ export default class CaseEditor extends BasePage {
         const vo = this.formData
         const imageVOs00 = vo.imageVOs00[0]
         const imageVOs01 = vo.imageVOs01
+        const lesionVOs = this.lesionVOs
+        const userId = '123456'
         imageVOs00.resourceType = this.FILE_TYPE.MASTER
         imageVOs01.forEach((fsVO, i) => {
             fsVO.resourceType = this.FILE_TYPE.THUMBNAIL
         })
-        const caseVO = [{
+        const caseVO = {
             ...vo,
             imageVOs00: null,
             imageVOs01: null,
-            imageVOs: [imageVOs00, ...imageVOs01]
-        }]
+            imageVOs: [imageVOs00, ...imageVOs01],
+            lesionVOs
+        }
         this.saveLoading = true
-        await api.findCaseDetail({ caseVO })
+        await api.saveCase({ caseVO,userId })
         this.saveLoading = false
         ElMessage.success('保存成功！')
         this.$router.go(-1)
