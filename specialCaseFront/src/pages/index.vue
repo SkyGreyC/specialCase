@@ -43,7 +43,7 @@ const formSize = ref('default');  // formSize.value
 const data = reactive({
     form: {
         userName: 'cyt',
-        password: '123456'
+        password: '12345'
     },
     tab_menu:
         [
@@ -145,27 +145,4 @@ const goPage = (path: any) => {
     }
 }
 
-// .personal-center {
-//     height: 100vh;
-//     background-size: 100% 100%;
-//     background-repeat: no-repeat;
-//     background-image: url('@/assets/images/index/bg.png');
-
-//     &.white-bg {
-//         background: #fff;
-//     }
-
-//     :deep(.el-backtop) {
-//         background-color: transparent;
-//         box-shadow: none;
-//         width: 36px;
-//         height: 36px;
-//     }
-// }
-
-// .app-logo {
-//     cursor: pointer;
-//     display: flex;
-//     padding: 3px 20px;
-//     box-sizing: border-box;
-// }</style>
+</style>

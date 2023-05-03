@@ -41,7 +41,7 @@
                     <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit />
                 </el-form-item>
             </div>
-            <el-form-item v-bind="$plus.attrFormItem('lesionVOs', '病灶信息')" class="custom-col-2">
+            <el-form-item  class="custom-col-2">
                     <!-- <div v-if="readonly" class="custom-readonly">{{ formData.patientGender }}</div> -->
                     <div v-for="item in lesionVOs" :key="item.lesionInfo">
                         <el-input v-model="item.lesionLocation" class="el-input" placeholder="请填写病灶位置"></el-input>
@@ -50,7 +50,7 @@
                     </div>
                     <!-- <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit /> -->
                 </el-form-item>
-            <div class="custom-row">
+            <!-- <div class="custom-row">
                 <el-form-item v-bind="$plus.attrFormItem('imageVOs01', '病灶图', !readonly)" class="custom-col-2">
                     <file-uploader v-if="!readonly" v-model="formData.imageVOs01" :show-file-list="false"
                         :limit="20 * 1024 * 1024" accept="png|jpg|gif|jpeg|bmp" style="width: 100%;">
@@ -72,7 +72,7 @@
                     <image-uploader v-model="formData.imageVOs00" :disabled="readonly"
                         style="--custom-width-standard: 30vw;" />
                 </el-form-item>
-            </div>
+            </div> -->
 
         </el-form>
         <template v-if="!readonly" #footer>
@@ -158,19 +158,19 @@ export default class CaseEditor extends BasePage {
             return
         }
         const vo = this.formData
-        const imageVOs00 = vo.imageVOs00[0]
-        const imageVOs01 = vo.imageVOs01
+        // const imageVOs00 = vo.imageVOs00[0]
+        // const imageVOs01 = vo.imageVOs01
         const lesionVOs = this.lesionVOs
         const userId = '123456'
-        imageVOs00.resourceType = this.FILE_TYPE.MASTER
-        imageVOs01.forEach((fsVO, i) => {
-            fsVO.resourceType = this.FILE_TYPE.THUMBNAIL
-        })
+        // imageVOs00.resourceType = this.FILE_TYPE.MASTER
+        // imageVOs01.forEach((fsVO, i) => {
+        //     fsVO.resourceType = this.FILE_TYPE.THUMBNAIL
+        // })
         const caseVO = {
             ...vo,
-            imageVOs00: null,
-            imageVOs01: null,
-            imageVOs: [imageVOs00, ...imageVOs01],
+            // imageVOs00: null,
+            // imageVOs01: null,
+            // imageVOs: [imageVOs00, ...imageVOs01],
             lesionVOs
         }
         this.saveLoading = true
