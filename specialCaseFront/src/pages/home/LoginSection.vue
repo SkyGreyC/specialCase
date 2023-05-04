@@ -12,6 +12,7 @@
                     </div>
                 </template>
             </el-card>
+            <div class="step-bg-container"></div>
         </div>
     </div>
 </template>
@@ -80,4 +81,11 @@
             }
         }
     }
-}</style>
+}
+
+.step-bg-container {
+    position: relative;
+    width: 666px;
+    height: 440px
+}
+</style>

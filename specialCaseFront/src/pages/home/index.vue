@@ -8,13 +8,13 @@
                 </div>
             </div>
             <div class="custom-space-between">
-                <el-menu :default-active="defaultActive()" :router="true" mode="horizontal" active-text-color="#009983"
-                    class="header-menu">
-                    <el-menu-item index="/">
-                        <span>首页</span>
+                <el-menu :default-active="defaultActive()" :router="true" :ellipsis="false" mode="horizontal"
+                    active-text-color="#009983" class="header-menu">
+                    <el-menu-item index="/home">
+                        <span class="menu-label">首页</span>
                     </el-menu-item>
                     <el-menu-item index="/case">
-                        <span>专病库</span>
+                        <span class="menu-label">专病库</span>
                     </el-menu-item>
                 </el-menu>
                 <div class="custom-space-between" style="height: 32px;margin: 9px 20px;">
@@ -52,8 +52,8 @@
         <el-main>
             <div class="section" style="margin-bottom: 80px;">
                 <div class="section-head">
-                    <p class="section-subtext">登录</p>
-                    <p class="section-title">登录</p>
+                    <!-- <p class="section-subtext">登录</p> -->
+                    <p class="section-title">个人中心</p>
                 </div>
                 <LoginSection />
             </div>
@@ -104,25 +104,6 @@ const isWhiteBg = computed(() => {
 })
 </script>
 <style lang='scss' scoped>
-// .el-container {
-//     height: 100%;
-// }
-
-.el-header,
-.el-footer {
-    background-color: #b3c0d1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-}
-
-.el-main {
-    background-color: #e9eef3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-}
-
 .section {
     .section-head {
         margin: var(--custom-size-gap-lg) 0;
@@ -188,7 +169,6 @@ const isWhiteBg = computed(() => {
 .el-main {
     padding: 0;
     height: calc(100vh - 50px);
-    overflow: visible;
 }
 
 .el-header {
@@ -199,7 +179,7 @@ const isWhiteBg = computed(() => {
 
 .el-menu.header-menu {
     --el-menu-bg-color: transparent;
-    width: 140px;
+    width: 150px;
     display: flex;
     justify-content: space-between;
     border-bottom: none !important;
