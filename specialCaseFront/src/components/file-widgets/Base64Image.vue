@@ -8,8 +8,7 @@
 </template>
 
 <script lang="ts">
-import { Options } from 'vue-class-component';
-import { Emit, Model, Prop, Watch } from 'vue-property-decorator';
+import { Options, Prop, Watch } from 'vue-property-decorator';
 import BaseComponent from '../BaseComponent';
 
 declare interface ImageVO {

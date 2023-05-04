@@ -5,6 +5,7 @@ import ImageUploader from './form-items/ImageUploader.vue'
 import FileUploader from './form-items/FileUploader.vue'
 import Base64Image from './file-widgets/Base64Image.vue'
 import ImageItems from './image-items/ImageItems.vue'
+import SvgIcon from './file-widgets/SvgIcon.vue'
 
 const components = [
     PageTable,
@@ -13,7 +14,8 @@ const components = [
     ImageUploader,
     FileUploader,
     Base64Image,
-    ImageItems
+    ImageItems,
+    SvgIcon
 ]
 
 const install = (Vue) => {

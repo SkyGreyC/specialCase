@@ -43,7 +43,7 @@ const formSize = ref('default');  // formSize.value
 const data = reactive({
     form: {
         userName: 'cyt',
-        password: '12345'
+        password: '123456'
     },
     tab_menu:
         [
@@ -144,5 +144,4 @@ const goPage = (path: any) => {
         }
     }
 }
-
 </style>
