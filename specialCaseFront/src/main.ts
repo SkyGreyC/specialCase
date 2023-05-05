@@ -10,7 +10,7 @@ import Utils from '@/utils'
 // 统一导入el-icon图标
 import * as ElIconModules from '@element-plus/icons-vue'
 
-// import 'virtual:svg-icons-register'
+import 'virtual:svg-icons-register'
 import 'element-plus/dist/index.css'
 import '@/styles/index.scss'
 

@@ -5,7 +5,7 @@
                 <template #header>
                     <div class="animation" style="height: 130px;">
                         <div>
-                            <svg-icon :size="40" icon="logo" />
+                            <svg-icon :size="40" icon="personal-message" />
                         </div>
                         <h1>登录</h1>
 

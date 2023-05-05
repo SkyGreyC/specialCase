@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 // 配置@别名
@@ -10,6 +12,11 @@ export default defineConfig({
   plugins: [
     vue(),
     // VueSetupExtend(),
+    createSvgIconsPlugin({
+      // 配置路劲在你的src里的svg存放文件
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+      symbolId: 'icon-[dir]-[name]',
+    }),
   ],
   resolve: {
     // ↓路径别名

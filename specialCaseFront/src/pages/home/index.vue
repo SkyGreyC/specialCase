@@ -2,9 +2,13 @@
     <el-container :class="{ 'white-bg': isWhiteBg }" class="personal-center">
         <el-header class="custom-space-between" style="border-bottom: var(--custom-border);">
             <!-- logo返回首页 -->
-            <div style="display: flex;padding: 10px 0;">
-                <div style="width: 100px" class="app-logo">
-                    <svg-icon icon="logo" height="24px" width="82px" @click="toHome" />
+            <div style="display: flex;padding: 1px 0;">
+                <div style="width: 220px" class="app-logo" @click="toHome">
+                    <svg-icon icon="logo" height="48px" width="48px" />
+                    <span
+                        style="font-family: FangSong,sans-serif;font-size: 18px;font-weight: bolder;margin-left: 0px;color: #2589FF;">
+                        川大专病库
+                    </span>
                 </div>
             </div>
             <div class="custom-space-between">
@@ -156,7 +160,7 @@ const isWhiteBg = computed(() => {
 .app-logo {
     cursor: pointer;
     display: flex;
-    padding: 3px 20px;
+    padding: 0px 20px;
     box-sizing: border-box;
 }
 
