@@ -1,5 +1,5 @@
 body {
-    -el-color-primary: #009983;
+    --el-color-primary: #009983;
     --el-color-primary-light-3: #33ad9c;
     --el-color-primary-light-5: #66e6d3;
     --el-color-primary-light-7: #96e8dc;
@@ -75,7 +75,7 @@ body {
         border-width: 0;
     }
     &.el-button--primary.is-plain {
-        --el-button-bg-color: var(var(--el-color-primary-light-8));
+        --el-button-bg-color: var(--el-color-primary-light-8);
     }
 }
 

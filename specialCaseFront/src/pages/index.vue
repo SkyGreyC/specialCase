@@ -75,7 +75,7 @@ const submit = async (form) => {
         console.log(res, '测试数据');
         if (res.code === '000') {
             var userInfo = res.data.userInfo;
-            user.setUserInfo(userInfo);
+            // user.setUserInfo(userInfo);
             user.setToken(userInfo.userId);
             token = userInfo.userId;
             window.localStorage.setItem("token", userInfo.userId);
@@ -89,7 +89,7 @@ const submit = async (form) => {
 //首页前端栏
 
 
-const userInfo = user.$state.userInfo || {}
+// const userInfo = user.$state.userInfo || {}
 let token = user.$state.token || ''
 const goPage = (path: any) => {
     router.push({ path })

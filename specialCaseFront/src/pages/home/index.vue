@@ -6,7 +6,7 @@
                 <div style="width: 220px" class="app-logo" @click="toHome">
                     <svg-icon icon="logo" height="48px" width="48px" />
                     <span
-                        style="font-family: FangSong,sans-serif;font-size: 18px;font-weight: bolder;margin-left: 0px;color: #2589FF;">
+                        style="font-family: FangSong,sans-serif;font-size: 18px;font-weight: bolder;margin-left: 0px;color: #009983;">
                         川大专病库
                     </span>
                 </div>
@@ -26,12 +26,12 @@
                         popper-class="custom-popover">
                         <template #reference>
                             <el-link :underline="false" style="margin-left: 30px;line-height: 32px;">
-                                <span style="margin-left:10px;">{{ userInfo.nickName }} </span>
+                                <span style="margin-left:10px;">{{ nickName }} </span>
                             </el-link>
                         </template>
                         <div class="personal-card">
                             <div class="personal-card__header">
-                                <div class="custom-title" style="line-height: 26px;">{{ userInfo.nickName }}</div>
+                                <div class="custom-title" style="line-height: 26px;">{{ nickName }}</div>
                             </div>
                             <div class="personal-card__body">
                                 <div class="personal-menu-item" @click="goPage('/backstage')">
@@ -88,7 +88,7 @@ const user = useUser(); // 相当于setup方法
 
 //首页前端栏
 
-const userInfo = user.$state.userInfo || {}
+const nickName = user.$state.nickName || {}
 let token = user.$state.token || ''
 const defaultActive = () => '/' + (route.path.split('/')[1] || '')
 const toHome = () => router.push('/')

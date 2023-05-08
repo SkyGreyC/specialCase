@@ -6,14 +6,18 @@ export const useUser = defineStore({
     id:'user',
     state(){
         return {
-            userInfo:null,
-            token:localStorage.getItem('token') ? localStorage.getItem('token'):''
+            userName:sessionStorage.getItem('userName') ? sessionStorage.getItem('userName'):'',
+            nickName:sessionStorage.getItem('nickName') ? sessionStorage.getItem('nickName'):'',
+            token:sessionStorage.getItem('token') ? sessionStorage.getItem('token'):''
         }
     },
     // 修改方式
     actions:{
-        setUserInfo(user){
-            this.userInfo = user;
+        setUserName(user){
+            this.userName = user;
+        },
+        setNickName(user){
+            this.nickName = user;
         },
         // { userMenu:值  }
         setToken(token) {

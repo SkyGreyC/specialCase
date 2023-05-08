@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Layout from '@/pages/index.vue'
+import Layout from '@/pages/home/index.vue'
 import ResetPwd from '@/pages/resetPwd.vue'
 import backstageRoute from './backstage'
 import homeRoute from './home'

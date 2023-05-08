@@ -5,7 +5,7 @@
                 <el-carousel type="card" height="430px" :autoplay="false" @change="setCarouselIndex">
                     <el-carousel-item v-for="(item, i) in caseList" :key="item.caseId" :class="getCarouselClass(i)">
                         <div class="case-card">
-                            <!-- <el-image src="@/assets/images/index/bg.png" class="case-card__left" /> -->
+                            <el-image src="@/assets/images/index/bg.png" class="case-card__left" />
                             <div class="case-card__right">
                                 <div class="case-logo">
                                     {{ item.homeTitle }}
