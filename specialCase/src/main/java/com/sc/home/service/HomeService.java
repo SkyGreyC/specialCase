@@ -9,6 +9,7 @@ import com.sc.utils.JsonModel;
 import com.sc.utils.MapToBean;
 import com.sc.utils.entity.HomeEntity;
 import com.sc.utils.entity.UserEntity;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,6 +100,26 @@ public class HomeService {
             }
             List<HomeEntity> data = homeLogic.findHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
             model.msgSuccess("查询首页信息成功",MapToBean.toList(data, HomeVO.class));
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
+     * 查询首页信息详情
+     * */
+    @RequestMapping(value = "/findHomeDetail",method = RequestMethod.POST)
+    public JsonModel findHomeDetail(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            String caseId = MapUtils.getString(map,"caseId");
+            if(CommonUtils.isNull(caseId)){
+                model.msgError("查询首页信息详情失败，caseId为空");
+                return model;
+            }
+            HomeEntity data = homeLogic.findHomeDetail(caseId);
+            model.msgSuccess("查询首页信息详情成功",MapToBean.toBean(data, HomeVO.class));
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());

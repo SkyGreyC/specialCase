@@ -46,6 +46,10 @@ const menuList = [
                 label: '病例管理',
                 name: 'case'
             },
+            {
+                label: '案例管理',
+                name: 'home'
+            },
         ]
     }
 ]

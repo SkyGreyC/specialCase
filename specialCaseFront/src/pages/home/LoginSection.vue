@@ -100,9 +100,10 @@ export default class LoginSection extends BasePage {
     })
 
     toggleMenu(type) {
-        this.current_menu.value = type;
+        this.current_menu = type;
     };
-    current_menu = ref(this.formData.tab_menu[0].type);
+
+    current_menu = this.formData.tab_menu[0].type;
 
     // 获取页面组件对象
     formRef = ref();

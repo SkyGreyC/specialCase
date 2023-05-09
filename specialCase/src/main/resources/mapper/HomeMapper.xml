@@ -24,6 +24,13 @@
         WHERE is_del=#{home.isDel}
     </select>
 
+    <!-- 查询首页信息 -->
+    <select id="loadByKey" resultMap="home">
+        SELECT <include refid="columnsAll"/>
+        FROM sc_home
+        WHERE home_id=#{homeId}
+    </select>
+
     <update id="updateByKey">
         UPDATE sc_home
         <set>

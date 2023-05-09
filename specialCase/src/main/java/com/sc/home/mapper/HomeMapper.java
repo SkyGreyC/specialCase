@@ -16,6 +16,11 @@ public interface HomeMapper {
     HomeEntity getHomeInfo(@Param("home") HomeEntity entity);
 
     /**
+     * 查询首页信息
+     */
+    HomeEntity loadByKey(@Param("homeId") String homeId);
+
+    /**
      * 修改首页信息
      */
     int updateByKey(@Param("home") HomeEntity entity);

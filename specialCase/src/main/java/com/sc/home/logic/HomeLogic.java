@@ -54,4 +54,11 @@ public class HomeLogic {
         return homeMapper.findByWhere(entity);
     }
 
+    /**
+     * 查询首页信息详情
+     */
+    public HomeEntity findHomeDetail(String homeId){
+        return homeMapper.loadByKey(homeId);
+    }
+
 }

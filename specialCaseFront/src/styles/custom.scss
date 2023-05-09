@@ -70,7 +70,7 @@ body {
     margin-right: calc(-1px * var(--custom-gutter));
 
     @mixin customCol {
-        padding-left: calc(1px * var(--custom-gutter));
+        padding-left: calc(2px * var(--custom-gutter));
         padding-right: calc(1px * var(--custom-gutter));
         box-sizing: border-box;
     }
