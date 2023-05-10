@@ -36,6 +36,14 @@
                                 <el-button type="primary" plain style="height: 40px;" @click="">我的信息</el-button>
                                 <el-button type="primary" plain style="height: 40px;" @click="">我的收藏</el-button>
                             </div>
+                            <div>
+                                <h3>后台管理</h3>
+                                <div class="personal-menu-item" @click="goPage('/backstage')">
+                                    <span>
+                                        <el-button type="primary" style="height: 40px;" @click="">管理界面</el-button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div v-else class="form-wrap">
                             <el-form label-width="80px" ref="formRef" :model="formData.form" :rules="rules">

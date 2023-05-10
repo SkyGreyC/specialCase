@@ -1,7 +1,7 @@
 <template>
     <div class='page-table'>
         <slot name="topbar" />
-        <el-table :data="data.records" height="100%" @selection-change="handleSelectionChange">
+        <el-table :data="data.records" height="100%" :header-cell-style="{background:'#eef1f6',color:'#606266'}" @selection-change="handleSelectionChange">
             <el-table-column v-if="multiple" type="selection" width="40px" />
             <slot />
         </el-table>

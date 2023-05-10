@@ -23,10 +23,15 @@ public class HomeLogic {
      * 新增首页信息
      */
     @Transactional
-    public int insertHomeInfo(HomeEntity entity){
-        entity.setHomeId(CommonUtils.getUUID());
-        entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
-        return homeMapper.insertHome(entity);
+    public int saveHomeInfo(HomeEntity entity){
+        String homeId = entity.getHomeId();
+        if(CommonUtils.isNull(homeId)){
+            entity.setHomeId(CommonUtils.getUUID());
+            entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+            return homeMapper.insertHome(entity);
+        }else {
+            return homeMapper.updateByKey(entity);
+        }
     }
 
     /**

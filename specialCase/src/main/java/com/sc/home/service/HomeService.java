@@ -27,19 +27,19 @@ public class HomeService {
     private HomeLogic homeLogic;
 
     /*
-     * 新增首页信息
+     * 新增或修改首页信息
      * */
-    @RequestMapping(value = "/insertHomeInfo",method = RequestMethod.POST)
-    public JsonModel insertHomeInfo(@RequestBody Map<String, Object> map){
+    @RequestMapping(value = "/saveHomeInfo",method = RequestMethod.POST)
+    public JsonModel saveHomeInfo(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
             HomeVO homeVO = MapToBean.getObject(map,"homeVO",HomeVO.class);
             if(CommonUtils.isAnyNull(homeVO.getHomeTitle(),homeVO.getHomeType(),homeVO.getHomeInfo())){
-                model.msgError("新增首页信息失败，有内容为空");
+                model.msgError("保存首页信息失败，有内容为空");
                 return model;
             }
-            homeLogic.insertHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
-            model.msgSuccess("新增首页信息成功");
+            homeLogic.saveHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
+            model.msgSuccess("保存首页信息成功");
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());

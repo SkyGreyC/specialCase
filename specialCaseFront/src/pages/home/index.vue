@@ -11,7 +11,7 @@
                     </span>
                 </div>
             </div>
-            <div class="custom-space-between">
+            <div class="custom-space-between" style="height: 32px;margin: 9px 50px;">
                 <el-menu :default-active="defaultActive()" :router="true" :ellipsis="false" mode="horizontal"
                     active-text-color="#009983" class="header-menu">
                     <el-menu-item index="/home">
@@ -21,7 +21,7 @@
                         <span class="menu-label">专病库</span>
                     </el-menu-item>
                 </el-menu>
-                <div class="custom-space-between" style="height: 32px;margin: 9px 20px;">
+                <!-- <div class="custom-space-between" style="height: 32px;margin: 9px 20px;">
                     <el-popover :show-arrow="false" placement="bottom" trigger="hover" width="300px"
                         popper-class="custom-popover">
                         <template #reference>
@@ -48,9 +48,8 @@
                                 </span>
                             </div>
                         </div>
-
                     </el-popover>
-                </div>
+                </div> -->
             </div>
         </el-header>
         <el-main>
@@ -66,6 +65,12 @@
                     <p class="section-subtext">首页介绍</p>
                     <p class="section-title">多类型案例介绍</p>
                 </div>
+                <HomeSection />
+            </div>
+            <div class="section section-aliceblue" style="margin-bottom: 80px;">
+                <div class="section-head">
+                    <p class="section-title">案例介绍</p>
+                </div>
                 <CaseSection />
             </div>
         </el-main>
@@ -76,6 +81,7 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
 import CaseSection from './CaseSection.vue';
+import HomeSection from './HomeSection.vue';
 import LoginSection from './LoginSection.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '@/store/user';
@@ -132,6 +138,10 @@ const isWhiteBg = computed(() => {
         .section-head {
             color: #fff;
         }
+    }
+    &.section-aliceblue {
+        background-color: var(--custom-fill-aliceblue);
+        padding: 30px 0;
     }
 }
 

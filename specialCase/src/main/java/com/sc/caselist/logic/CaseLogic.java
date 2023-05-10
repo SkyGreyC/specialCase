@@ -133,7 +133,7 @@ public class CaseLogic {
         for(CaseVO caseVO: caseVOs){
             MarkEntity markEntity = markMapper.findByUserIdAndCaseId(caseVO.getCaseId(),userId);
             if(markEntity!=null){
-                caseVO.setIsMarked(markEntity.getIsDel());
+                caseVO.setIsMarked(TypeEnum.IS_MARKED.YES.toString());
             }else{
                 caseVO.setIsMarked(TypeEnum.IS_MARKED.NO.toString());
             }

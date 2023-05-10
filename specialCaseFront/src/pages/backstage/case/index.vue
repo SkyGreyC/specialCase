@@ -11,14 +11,10 @@
             </toolbar>
         </template>
         <el-table-column prop="caseTitle" label="编号" />
-        <el-table-column prop="nickName" label="昵称" />
-        <el-table-column label="用户类型">
-            <template #default="scope">
-                <el-tag v-if="scope.row.userType === '00'" effect="light" type="success">一般用户</el-tag>
-                <el-tag v-else-if="scope.row.userType === '01'" effect="light" type="success">中级用户</el-tag>
-                <el-tag v-else effect="light" type="success">高级用户</el-tag>
-            </template>
-        </el-table-column>
+        <el-table-column prop="clinicalHistory" label="关键字" />
+        <el-table-column prop="machine" label="机器" />
+        <el-table-column prop="tracer" label="示踪剂" />
+        <el-table-column prop="updateTime" label="上传时间" />
         <el-table-column label="操作">
             <template #default="scope">
                 <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
@@ -32,7 +28,7 @@
 <script lang="ts">
 import { Options } from "vue-class-component";
 import BaseResourceList from "@/pages/BaseResourceList";
-import * as api from '@/api/user'
+import * as api from '@/api/case'
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 @Options({
@@ -50,7 +46,7 @@ export default class CaseManage extends BaseResourceList {
 
     async doQuery() {
         this.loading = true
-        const resp = await api.findUserList({
+        const resp = await api.findCaseList({
             page: this.page, userVO: {}
         })
         this.loading = false
@@ -67,7 +63,7 @@ export default class CaseManage extends BaseResourceList {
         const flag = await ElMessageBox.confirm('确定删除？')
         if (flag) {
             this.loading = true
-            await api.deleteUser({ userId: row.userId })
+            await api.deleteCase({ userId: row.userId })
             this.loading = false
             ElMessage.success('删除成功！')
             this.doQuery()
