@@ -34,11 +34,11 @@ public class HomeService {
         try{
             JsonModel model = new JsonModel();
             HomeVO homeVO = MapToBean.getObject(map,"homeVO",HomeVO.class);
-            if(CommonUtils.isAnyNull(homeVO.getHomeTitle(),homeVO.getHomeType(),homeVO.getHomeInfo())){
+            if(CommonUtils.isAnyNull(homeVO.getHomeTitle(),homeVO.getHomeInfo())){
                 model.msgError("保存首页信息失败，有内容为空");
                 return model;
             }
-            homeLogic.saveHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
+            homeLogic.saveHomeInfo(homeVO);
             model.msgSuccess("保存首页信息成功");
             return model;
         }catch(Exception e){
@@ -94,11 +94,11 @@ public class HomeService {
         try{
             JsonModel model = new JsonModel();
             HomeVO homeVO = MapToBean.getObject(map,"homeVO",HomeVO.class);
-            if(CommonUtils.isNull(homeVO.getHomeType())){
-                model.msgError("查询首页信息失败，类型为空");
-                return model;
-            }
-            List<HomeEntity> data = homeLogic.findHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
+//            if(CommonUtils.isNull(homeVO.getHomeType())){
+//                model.msgError("查询首页信息失败，类型为空");
+//                return model;
+//            }
+            List<HomeVO> data = homeLogic.findHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
             model.msgSuccess("查询首页信息成功",MapToBean.toList(data, HomeVO.class));
             return model;
         }catch(Exception e){
@@ -113,13 +113,13 @@ public class HomeService {
     public JsonModel findHomeDetail(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
-            String caseId = MapUtils.getString(map,"caseId");
-            if(CommonUtils.isNull(caseId)){
-                model.msgError("查询首页信息详情失败，caseId为空");
+            String homeId = MapUtils.getString(map,"homeId");
+            if(CommonUtils.isNull(homeId)){
+                model.msgError("查询首页信息详情失败，homeId");
                 return model;
             }
-            HomeEntity data = homeLogic.findHomeDetail(caseId);
-            model.msgSuccess("查询首页信息详情成功",MapToBean.toBean(data, HomeVO.class));
+            HomeVO data = homeLogic.findHomeDetail(homeId);
+            model.msgSuccess("查询首页信息详情成功",data);
             return model;
         }catch(Exception e){
             return new JsonModel().msgError(e.getMessage());

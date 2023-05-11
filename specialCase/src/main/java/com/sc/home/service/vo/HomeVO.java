@@ -1,8 +1,10 @@
 package com.sc.home.service.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.sc.caselist.service.vo.ImageVO;
 
 import java.util.Date;
+import java.util.List;
 
 public class HomeVO {
 
@@ -17,6 +19,8 @@ public class HomeVO {
     private String isDel;
 
     private String createTime;
+
+    private List<ImageVO> imageVOs;
 
     public String getHomeId() {
         return homeId;
@@ -64,5 +68,13 @@ public class HomeVO {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public List<ImageVO> getImageVOs() {
+        return imageVOs;
+    }
+
+    public void setImageVOs(List<ImageVO> imageVOs) {
+        this.imageVOs = imageVOs;
     }
 }

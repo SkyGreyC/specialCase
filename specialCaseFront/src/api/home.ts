@@ -6,4 +6,6 @@ export const findHomeInfo = createPost(`${SCOPE}/findHomeInfo`)
 
 export const findHomeDetail = createPost(`${SCOPE}/findHomeDetail`)
 
-export const saveHomeDetail = createPost(`${SCOPE}/saveHomeDetail`)
+export const saveHomeInfo = createPost(`${SCOPE}/saveHomeInfo`)
+
+export const deleteHomeInfo = createPost(`${SCOPE}/deleteHomeInfo`)

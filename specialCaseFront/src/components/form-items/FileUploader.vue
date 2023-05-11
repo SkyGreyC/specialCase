@@ -13,10 +13,11 @@
         <!-- 用于触发elForm的校验事件 -->
         <!-- <el-input v-show="1 === 0" v-model="mdValue" /> -->
         <template v-if="showFileList">
-            <!-- <div v-for="item in imageVOs" :key="item.imageId" class="file-item">
-                <el-link :underline="false" @click="downloadFile(item)">{{ item.imageName }}</el-link>
-                <el-link v-if="!disabled" :underline="false" type="danger" style="margin-left: 10px;" @click="removeFile(item)">删除</el-link>
-            </div> -->
+            <div v-for="item in imageVOs" :key="item.imageVO.imageId" class="file-item">
+                <el-link :underline="false" @click="downloadFile(item)">{{ item.imageVO.imageName }}</el-link>
+                <el-link v-if="!disabled" :underline="false" type="danger" style="margin-left: 10px;"
+                    @click="removeFile(item)">删除</el-link>
+            </div>
             <template v-if="multiple">
                 <div v-for="progress in progressList" :key="progress.uid" class="progress-item">
                     {{ progress.name }}&nbsp;&nbsp;
@@ -34,10 +35,8 @@
 </template>
 
 <script  lang="ts">
-import _, { values } from 'lodash'
-import { placeholder } from '@babel/types';
-import { Options } from 'vue-class-component';
-import { Emit, Model, Prop } from 'vue-property-decorator';
+import _ from 'lodash'
+import { Options, Emit, Model, Prop } from 'vue-property-decorator';
 import BaseComponent from '../BaseComponent';
 import request from '@/utils/request'
 
@@ -91,11 +90,12 @@ export default class FileUploader extends BaseComponent {
     progressList = []
 
     get imageVOs() {
+        console.log(this.value)
         return _.isArray(this.value) ? this.value : []
     }
 
     get mdValue() { // 用于判断附件是否改变，可触发表单校验
-        return this.imageVOs.map(val => val.imageVO.mdValue).join(',')
+        return this.imageVOs.map(val => val.imageVO.imageId).join(',')
     }
 
     get remind() { //附件上传框内的提示信息
@@ -114,6 +114,8 @@ export default class FileUploader extends BaseComponent {
      */
     @Emit('change')
     onFileUpload(resp, file, progress) {
+        console.log(progress)
+        console.log(resp)
         const result = resp
         // 从正在上传的附件列表中移除
         const index = this.progressList.indexOf(progress)
@@ -147,9 +149,9 @@ export default class FileUploader extends BaseComponent {
             url: this.uploadUrl,
             data: formData,
             timeout: 300000,
-            // onFileUpload(e) {
-            //     progress.loaded = (progress._loaded || 0) + e.loaded
-            // }
+            onUploadProgress(e) {
+                progress.loaded = (progress._loaded || 0) + e.loaded
+            }
         })
         return resp.data
     }
@@ -164,14 +166,38 @@ export default class FileUploader extends BaseComponent {
      * 上传前处理，用于校验文件是否合理
      */
     beforeUpload(file) {
-
+        const filename = file.name.toLowerCase()
+        //附件校验
+        const errorMessage = this.validateFile(file)
+        if (errorMessage) {
+            return false
+        }
+        let progress = {
+            uid: file.uid,
+            name: file.name,
+            _loaded: 0,
+            loaded: 0,
+            size: file.size
+        }
+        //加入正在上传中列表
+        if (this.multiple) {
+            this.progressList.push(progress)
+        } else {
+            this.progressList = [progress]
+        }
+        // 获取代理对象
+        progress = this.progressList[this.progressList.length - 1]
+        this.upload(file, progress).then(resp => {
+            this.onFileUpload(resp.data, file, progress)
+        })
+        return false
     }
 
     removeFile(item) {
         this.value.splice(this.value.indexOf(item), 1)
     }
 
-    downloadFile(imageVO) {
+    async downloadFile(imageVO) {
 
     }
 }

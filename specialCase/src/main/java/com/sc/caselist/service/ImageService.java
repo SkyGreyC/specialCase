@@ -44,8 +44,8 @@ public class ImageService {
         String originalFilename = file.getOriginalFilename();
         String imageId = CommonUtils.getUUID();
         String filename = imageId+originalFilename.substring(originalFilename.lastIndexOf("."));
-      String path="D:/code/specialCase/image/";
-//        String path="C:/CYT/code/image/";
+//      String path="D:/code/specialCase/image/";
+        String path="C:/CYT/code/image/";
         //判断该路径是否存在
         File file1 = new File(path);
         if (!file1.exists()) {

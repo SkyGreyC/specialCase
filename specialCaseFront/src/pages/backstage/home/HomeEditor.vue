@@ -1,35 +1,36 @@
 <template>
     <full-panel v-loading="loading" class="case-editor">
         <el-form ref="form" :model="formData" label-position="top" class="custom-row">
-            <div class="custom-row">
-                <el-form-item v-bind="$plus.attrFormItem('homeTitle', '案例标题', !readonly)" class="custom-col-2">
-                    <div v-if="readonly" class="custom-readonly">{{ formData.homeTitle }}</div>
-                    <el-input v-else v-model="formData.homeTitle" maxlength="200" show-word-limit />
-                </el-form-item>
-                <el-form-item v-bind="$plus.attrFormItem('homeInfo', '案例描述', !readonly)" class="custom-col-2">
-                    <div v-if="readonly" class="custom-readonly">{{ formData.homeInfo }}</div>
-                    <el-input v-else v-model="formData.homeInfo" maxlength="2000" show-word-limit />
-                </el-form-item>
-            </div>
-            <div class="custom-row">
-                <el-form-item v-bind="$plus.attrFormItem('imageVOs', '案例图', !readonly)" class="custom-col-2">
-                    <file-uploader v-if="!readonly" v-model="formData.imageVOs" :show-file-list="true"
-                        :limit="20 * 1024 * 1024" accept="png|jpg|gif|jpeg|bmp" style="width: 100%;">
-                        <template #default="scope">
-                            <div class="custom-around-center">
-                                <svg-icon icon="upload" :size="50" style="margin: 0 auto;" />
-                                {{ scope.remind }}
-                            </div>
-                        </template>
-                    </file-uploader>
-                    <image-items :list="formData.imageVOs" :size="[200, 150]" :deletable="!readonly"
-                        style="margin-top: 20px;">
-                        <template #default="scope">
-                            <base64-image :src="scope.data" />
-                        </template>
-                    </image-items>
-                </el-form-item>
-            </div>
+            <el-form-item v-bind="$plus.attrFormItem('homeTitle', '案例标题', !readonly)" class="custom-col-1">
+                <div v-if="readonly" class="custom-readonly" style="min-height: 100px;">{{ formData.homeTitle }}</div>
+                <el-input v-else v-model="formData.homeTitle" :disabled="readonly" :row="6" maxlength="200" show-word-limit
+                    type="textarea" />
+            </el-form-item>
+            <el-form-item v-bind="$plus.attrFormItem('homeInfo', '案例描述', !readonly)" class="custom-col-1">
+                <div v-if="readonly" class="custom-readonly" style="min-height: 100px;">{{ formData.homeInfo }}</div>
+                <el-input v-else v-model="formData.homeInfo" :disabled="readonly" :row="6" maxlength="2000" show-word-limit
+                    type="textarea" />
+            </el-form-item>
+            <el-form-item v-bind="$plus.attrFormItem('imageVOs', '案例图', !readonly)" class="custom-col-1">
+                <file-uploader v-if="!readonly" v-model="formData.imageVOs" :show-file-list="true" :limit="20 * 1024 * 1024"
+                    accept="png|jpg|gif|jpeg|bmp" style="width: 15%;">
+                    <template #default="scope">
+                        <div class="custom-around-center">
+                            <svg-icon icon="upload" :size="50" style="margin: 0 auto;" />
+                            {{ scope.remind }}
+                        </div>
+                    </template>
+                </file-uploader>
+                <image-items :list="formData.imageVOs" :size="[200, 150]" :deletable="!readonly" style="margin-top: 20px;">
+                    <template #default="scope">
+                        <base64-image :src="scope.data" />
+                    </template>
+                </image-items>
+            </el-form-item>
+            <!-- <el-form-item v-bind="$plus.attrFormItem('imageVOs', '案例图', !readonly)" class="custom-col-1">
+                <image-uploader v-model="formData.imageVOs" :disabled="readonly"
+                    style="--custom-width-standard: 30vw;--custom-ratio: 0.66666667;" />
+            </el-form-item> -->
 
         </el-form>
         <template v-if="!readonly" #footer>
@@ -39,7 +40,7 @@
                 </template>
             </toolbar>
         </template>
-        
+
     </full-panel>
 </template>
 
@@ -101,12 +102,13 @@ export default class CaseEditor extends BasePage {
         // })
         const homeVO = {
             ...vo,
+            homeType: '00',
             // imageVOs00: null,
             // imageVOs01: null,
             // imageVOs: [imageVOs00, ...imageVOs01],
         }
         this.saveLoading = true
-        await api.saveHomeDetail({ homeVO })
+        await api.saveHomeInfo({ homeVO })
         this.saveLoading = false
         ElMessage.success('保存成功！')
         this.$router.go(-1)
