@@ -151,6 +151,7 @@ export default class HomeSection extends BasePage {
         }
 
         .case-logo {
+            font-size: 18px;
             height: 40px;
             width: 200px;
             border-radius: var(--custom-size-radius);

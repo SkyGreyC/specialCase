@@ -14,7 +14,7 @@
             <div class="custom-space-between" style="height: 32px;margin: 9px 50px;">
                 <el-menu :default-active="defaultActive()" :router="true" :ellipsis="false" mode="horizontal"
                     active-text-color="#009983" class="header-menu">
-                    <el-menu-item index="/home">
+                    <el-menu-item index="/">
                         <span class="menu-label">首页</span>
                     </el-menu-item>
                     <el-menu-item index="/case">
@@ -62,17 +62,18 @@
             </div>
             <div class="section section-dark" style="margin-bottom: 80px;">
                 <div class="section-head">
-                    <p class="section-subtext">首页介绍</p>
+                    <p class="section-subtext">系统介绍</p>
                     <p class="section-title">多类型案例介绍</p>
                 </div>
                 <HomeSection />
             </div>
             <div class="section section-aliceblue" style="margin-bottom: 80px;">
                 <div class="section-head">
-                    <p class="section-title">案例介绍</p>
+                    <p class="section-title">病例列表</p>
                 </div>
                 <CaseSection />
             </div>
+            <CommonFooter type="default" />
         </el-main>
         <el-footer>版权所有</el-footer>
     </el-container>
@@ -80,9 +81,11 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
+import UserHeader from './UserHeader.vue';
 import CaseSection from './CaseSection.vue';
 import HomeSection from './HomeSection.vue';
 import LoginSection from './LoginSection.vue';
+import CommonFooter from './CommonFooter.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '@/store/user';
 
@@ -139,6 +142,7 @@ const isWhiteBg = computed(() => {
             color: #fff;
         }
     }
+
     &.section-aliceblue {
         background-color: var(--custom-fill-aliceblue);
         padding: 30px 0;
