@@ -7,8 +7,8 @@
                         <div class="animation" style="height: 100px;">
                             <div>
                                 <svg-icon :size="40" icon="personal-message" />
-                                <div v-if="nickName">
-                                    <h1>{{ nickName }}您好，欢迎使用</h1>
+                                <div v-if="user.nickName">
+                                    <h1>{{ user.nickName }}您好，欢迎使用</h1>
                                     <div class="actions">
                                         <svg-icon :size="20" icon="loginout" @click="loginOut()" />
                                     </div>
@@ -26,7 +26,7 @@
                         </div>
                     </template>
                     <div>
-                        <div v-if="nickName" class="list-item">
+                        <div v-if="user.nickName" class="list-item">
                             <div>
                                 <h3>具体工作</h3>
                                 <el-button type="primary" style="height: 40px;" @click="">病例查看</el-button>
@@ -90,7 +90,8 @@ export default class LoginSection extends BasePage {
     router = useRouter()
     route = useRoute()
     //登录相关
-    user = useUser(); // 相当于setup方法
+    // user = useUser(); // 相当于setup方法
+    user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
     // 单向数据输出,双向数据绑定,还需要API方法的调用
     formSize = ref('default');  // formSize.value
 
@@ -130,15 +131,10 @@ export default class LoginSection extends BasePage {
             let res = await loginAPI(form);
             if (res.code === '000') {
                 var userInfo = res.data.userInfo;
-                this.user.setUserName(userInfo.userName);
-                this.user.setNickName(userInfo.nickName);
-                this.user.setToken(userInfo.userId);
-                this.token = userInfo.userId;
-                this.nickName = userInfo.nickName;
-                window.sessionStorage.setItem("token", userInfo.userId);
-                window.sessionStorage.setItem("userName", userInfo.userName);
-                window.sessionStorage.setItem("nickName", userInfo.nickName);
-                this.goPage('/home')
+                this.user = userInfo;
+                window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+                console.log(userInfo)
+                this.goPage('/')
             }
         } catch (err) {
             console.log(err)
@@ -148,14 +144,11 @@ export default class LoginSection extends BasePage {
     //注销登录信息
     loginOut = () => {
         window.sessionStorage.clear();
-        this.nickName = ''
-        this.token = ''
+        this.user = {}
     };
 
     //首页前端栏
 
-    nickName = this.user.$state.nickName || ''
-    token = this.user.$state.token || ''
     goPage(path: any) {
         this.$router.push({ path })
     }

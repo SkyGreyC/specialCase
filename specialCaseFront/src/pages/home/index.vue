@@ -97,8 +97,6 @@ const user = useUser(); // 相当于setup方法
 
 //首页前端栏
 
-const nickName = user.$state.nickName || {}
-let token = user.$state.token || ''
 const defaultActive = () => '/' + (route.path.split('/')[1] || '')
 const toHome = () => router.push('/')
 const goPage = (path: any) => {
