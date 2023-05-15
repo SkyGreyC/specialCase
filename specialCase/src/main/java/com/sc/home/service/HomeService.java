@@ -73,12 +73,12 @@ public class HomeService {
     public JsonModel deleteHomeInfo(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
-            HomeVO homeVO = MapToBean.getObject(map,"homeVO",HomeVO.class);
-            if(CommonUtils.isNull(homeVO.getHomeId())){
+            String homeId = MapUtils.getString(map,"homeId");
+            if(CommonUtils.isNull(homeId)){
                 model.msgError("删除首页信息失败，id为空");
                 return model;
             }
-            homeLogic.deleteHomeInfo(MapToBean.toBean(homeVO, HomeEntity.class));
+            homeLogic.deleteHomeInfo(homeId);
             model.msgSuccess("删除首页信息成功");
             return model;
         }catch(Exception e){

@@ -59,7 +59,9 @@ public class HomeLogic {
      * 删除首页信息
      */
     @Transactional
-    public int deleteHomeInfo(HomeEntity entity){
+    public int deleteHomeInfo(String homeId){
+        HomeEntity entity = new HomeEntity();
+        entity.setHomeId(homeId);
         entity.setIsDel(TypeEnum.IS_DEL.YES.toString());
         return homeMapper.updateByKey(entity);
     }

@@ -49,13 +49,12 @@ import { Options } from "vue-class-component";
 import BasePage from "@/pages/BasePage";
 import * as api from '@/api/home'
 import { ElMessage } from 'element-plus';
-import { callbackify } from "util";
-import { trigger } from "@vue/reactivity";
+import { BASE_URL } from "@/utils/request";
 
 @Options({
-    name: 'CaseEditor',
+    name: 'HomeEditor',
 })
-export default class CaseEditor extends BasePage {
+export default class HomeEditor extends BasePage {
 
     saveLoading = false
 
@@ -80,38 +79,42 @@ export default class CaseEditor extends BasePage {
         const resp = await api.findHomeDetail({
             homeId: this.homeId
         })
-        if (resp && resp.data && resp.data[0]) {
-            const vo = resp.data[0]
+        if (resp && resp.data) {
+            const vo = resp.data
             this.formData = vo
         }
         this.loading = false
     }
 
     async doSave() {
-        console.log(this.formData)
         const valid = await (this.$refs.form as any).validate()
         if (!valid) {
             return
         }
         const vo = this.formData
-        // const imageVOs00 = vo.imageVOs00[0]
-        // const imageVOs01 = vo.imageVOs01
-        // imageVOs00.resourceType = this.FILE_TYPE.MASTER
-        // imageVOs01.forEach((fsVO, i) => {
-        //     fsVO.resourceType = this.FILE_TYPE.THUMBNAIL
-        // })
         const homeVO = {
             ...vo,
             homeType: '00',
-            // imageVOs00: null,
-            // imageVOs01: null,
-            // imageVOs: [imageVOs00, ...imageVOs01],
         }
         this.saveLoading = true
         await api.saveHomeInfo({ homeVO })
         this.saveLoading = false
         ElMessage.success('保存成功！')
         this.$router.go(-1)
+    }
+
+           /**
+     * 获取附件的访问路径
+     */
+     getFileURL(vo): String {
+        if (!vo) {
+            return null
+        }
+        const imageId = vo.imageId
+        if (imageId) {
+            return `${BASE_URL}/image/downloadFile?imageId=${imageId}`
+        }
+        return null
     }
 
 }

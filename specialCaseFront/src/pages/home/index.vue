@@ -1,56 +1,7 @@
 <template>
     <el-container :class="{ 'white-bg': isWhiteBg }" class="personal-center">
         <el-header class="custom-space-between" style="border-bottom: var(--custom-border);">
-            <!-- logo返回首页 -->
-            <div style="display: flex;padding: 1px 0;">
-                <div style="width: 220px" class="app-logo" @click="toHome">
-                    <svg-icon icon="logo" height="48px" width="48px" />
-                    <span
-                        style="font-family: FangSong,sans-serif;font-size: 18px;font-weight: bolder;margin-left: 0px;color: #009983;">
-                        川大专病库
-                    </span>
-                </div>
-            </div>
-            <div class="custom-space-between" style="height: 32px;margin: 9px 50px;">
-                <el-menu :default-active="defaultActive()" :router="true" :ellipsis="false" mode="horizontal"
-                    active-text-color="#009983" class="header-menu">
-                    <el-menu-item index="/">
-                        <span class="menu-label">首页</span>
-                    </el-menu-item>
-                    <el-menu-item index="/case">
-                        <span class="menu-label">专病库</span>
-                    </el-menu-item>
-                </el-menu>
-                <!-- <div class="custom-space-between" style="height: 32px;margin: 9px 20px;">
-                    <el-popover :show-arrow="false" placement="bottom" trigger="hover" width="300px"
-                        popper-class="custom-popover">
-                        <template #reference>
-                            <el-link :underline="false" style="margin-left: 30px;line-height: 32px;">
-                                <span style="margin-left:10px;">{{ nickName }} </span>
-                            </el-link>
-                        </template>
-                        <div class="personal-card">
-                            <div class="personal-card__header">
-                                <div class="custom-title" style="line-height: 26px;">{{ nickName }}</div>
-                            </div>
-                            <div class="personal-card__body">
-                                <div class="personal-menu-item" @click="goPage('/backstage')">
-                                    <span>
-                                        <svg-icon :size="16" icon="personal-message" style="margin-right: 12px;" />
-                                        管理后台
-                                    </span>
-                                </div>
-                            </div>
-                            <div @click="goPage('/')">
-                                <span>
-                                    <svg-icon :size="16" icon="loginout" style="margin-right: 12px;" />
-                                    退出登录
-                                </span>
-                            </div>
-                        </div>
-                    </el-popover>
-                </div> -->
-            </div>
+            <UserHeader />
         </el-header>
         <el-main>
             <div class="section" style="margin-bottom: 80px;">
@@ -70,6 +21,7 @@
             <div class="section section-aliceblue" style="margin-bottom: 80px;">
                 <div class="section-head">
                     <p class="section-title">病例列表</p>
+                    <p @click="showMore" class="section-subtext2">查看更多</p>
                 </div>
                 <CaseSection />
             </div>
@@ -88,11 +40,13 @@ import LoginSection from './LoginSection.vue';
 import CommonFooter from './CommonFooter.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '@/store/user';
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 const router = useRouter()
 const route = useRoute()
 //登录相关
-const user = useUser(); // 相当于setup方法
+// const user = useUser(); // 相当于setup方法
+const user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
 
 
 //首页前端栏
@@ -113,6 +67,13 @@ const isWhiteBg = computed(() => {
     }
     return false
 })
+
+const showMore= () => {
+              if(!user) {
+              }else {
+                ElMessage.error('请登录后查看')
+              }
+            }
 </script>
 <style lang='scss' scoped>
 .section {
@@ -122,6 +83,12 @@ const isWhiteBg = computed(() => {
     }
 
     .section-subtext {
+        margin: var(--custom-size-gap-sm) 0;
+        opacity: 0.6;
+    }
+
+    .section-subtext2 {
+        cursor: pointer;
         margin: var(--custom-size-gap-sm) 0;
         opacity: 0.6;
     }

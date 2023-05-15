@@ -1,5 +1,4 @@
 <template>
-    <el-header class="custom-space-between" style="border-bottom: var(--custom-border);">
         <!-- logo返回首页 -->
         <div style="display: flex;padding: 1px 0;">
             <div style="width: 220px" class="app-logo" @click="toHome">
@@ -50,7 +49,6 @@
                     </el-popover>
                 </div> -->
         </div>
-    </el-header>
 </template>
 
 <script lang="ts">

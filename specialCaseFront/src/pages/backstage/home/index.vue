@@ -1,8 +1,7 @@
 <template>
-    <page-table v-loading="loading" :data="tableData" :page="page" class="case-manage" @page-change="doQuery"
-        @selection-change="setSelection">
+    <normal-table v-loading="loading" :data="tableData" :page="page" class="case-manage" >
         <template #topbar>
-            <toolbar :label="`案例列表(${tableData.total})`">
+            <toolbar :label="`案例列表`">
                 <template #actions>
                     <el-input v-model="search.tracer" prefix-icon="Search" claerable placeholder="搜索"
                         style="margin-right: 10px;width: 220px;" @keyup.enter="reload(false)" />
@@ -15,11 +14,11 @@
         <el-table-column label="操作">
             <template #default="scope">
                 <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
-                <el-link :underline="false" type="primary" @click="doEdit(scope.row)">编辑</el-link>
-                <el-link :underline="false" type="danger" @click="doDelete(scope.row)">删除</el-link>
+                <el-link :underline="false" type="primary" @click="doEdit(scope.row)" style="margin-left: 10px;">编辑</el-link>
+                <el-link :underline="false" type="danger" @click="doDelete(scope.row)" style="margin-left: 10px;">删除</el-link>
             </template>
         </el-table-column>
-    </page-table>
+    </normal-table>
 </template>
 
 <script lang="ts">
@@ -60,7 +59,7 @@ export default class CaseManage extends BaseResourceList {
         const flag = await ElMessageBox.confirm('确定删除？')
         if (flag) {
             this.loading = true
-            await api.deleteHomeInfo({ userId: row.userId })
+            await api.deleteHomeInfo({ homeId: row.homeId })
             this.loading = false
             ElMessage.success('删除成功！')
             this.doQuery()
@@ -71,7 +70,7 @@ export default class CaseManage extends BaseResourceList {
         this.$router.push({
             path: this.$route.path + '/editor',
             query: {
-                detailId: row.userId
+                detailId: row.homeId
             }
         })
     }
@@ -80,7 +79,7 @@ export default class CaseManage extends BaseResourceList {
         this.$router.push({
             path: this.$route.path + '/editor',
             query: {
-                id: row.userId
+                id: row.homeId
             }
         })
     }

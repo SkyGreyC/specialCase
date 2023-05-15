@@ -1,4 +1,5 @@
 import PageTable from './table/PageTable.vue'
+import NormalTable from './table/NormalTable.vue'
 import Toolbar from './toolbar/Toolbar.vue'
 import FullPanel from './full-panel/FullPanel.vue'
 import ImageUploader from './form-items/ImageUploader.vue'
@@ -9,6 +10,7 @@ import SvgIcon from './file-widgets/SvgIcon.vue'
 
 const components = [
     PageTable,
+    NormalTable,
     Toolbar,
     FullPanel,
     ImageUploader,

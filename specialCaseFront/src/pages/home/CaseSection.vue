@@ -1,5 +1,5 @@
 <template>
-    <page-table v-loading="loading" :data="tableData" :page="page" class="x-wrap" @page-change="doQuery">
+    <normal-table v-loading="loading" :data="tableData" :page="page" class="x-wrap" @page-change="doQuery">
         <el-table-column prop="caseTitle" label="编号" />
         <el-table-column prop="clinicalHistory" label="关键字" />
         <el-table-column prop="machine" label="机器" />
@@ -10,7 +10,7 @@
                 <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
             </template>
         </el-table-column>
-    </page-table>
+    </normal-table>
 </template>
 
 <script lang="ts">
@@ -20,7 +20,7 @@ import BasePage from "../BasePage";
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 const queryData = {
-    page: { current: 1, size: 4 },
+    page: { current: 1, size: 10 },
     homeVO: { homeType: '00' }
 }
 @Options({

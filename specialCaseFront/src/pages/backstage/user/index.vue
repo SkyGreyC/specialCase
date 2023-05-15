@@ -19,8 +19,8 @@
         <el-table-column label="操作">
             <template #default="scope">
                 <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
-                <el-link :underline="false" type="primary" @click="doEdit(scope.row)">编辑</el-link>
-                <el-link :underline="false" type="danger" @click="doDelete(scope.row)">删除</el-link>
+                <el-link :underline="false" type="primary" @click="doEdit(scope.row)" style="margin-left: 10px;">编辑</el-link>
+                <el-link :underline="false" type="danger" @click="doDelete(scope.row)" style="margin-left: 10px;">删除</el-link>
             </template>
         </el-table-column>
     </page-table>
