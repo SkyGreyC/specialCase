@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Layout from '@/pages/home/index.vue'
 import ResetPwd from '@/pages/resetPwd.vue'
+import caseRoute from './case'
 import backstageRoute from './backstage'
 import homeRoute from './home'
  
@@ -18,7 +19,8 @@ let routes= [
         component: ResetPwd,
     },
     backstageRoute,
-    homeRoute
+    homeRoute,
+    caseRoute
     //{
         //配置404页面
         //path: '/:catchAll(.*)',

@@ -77,7 +77,7 @@ const submit = async (form) => {
             var userInfo = res.data.userInfo;
             // user.setUserInfo(userInfo);
             user.setToken(userInfo.userId);
-            token = userInfo.userId;
+            // token = userInfo.userId;
             window.localStorage.setItem("token", userInfo.userId);
             goPage('/home')
         }
@@ -90,7 +90,7 @@ const submit = async (form) => {
 
 
 // const userInfo = user.$state.userInfo || {}
-let token = user.$state.token || ''
+// let token = user.$state.token || ''
 const goPage = (path: any) => {
     router.push({ path })
 }

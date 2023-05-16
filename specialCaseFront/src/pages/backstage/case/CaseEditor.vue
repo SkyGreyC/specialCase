@@ -6,13 +6,17 @@
                     <div v-if="readonly" class="custom-readonly">{{ formData.caseTitle }}</div>
                     <el-input v-else v-model="formData.caseTitle" maxlength="32" show-word-limit />
                 </el-form-item>
-                <el-form-item v-bind="$plus.attrFormItem('clinical', '病例描述', !readonly)" class="custom-col-2">
+                <el-form-item v-bind="$plus.attrFormItem('clinical', '病例', !readonly)" class="custom-col-2">
                     <div v-if="readonly" class="custom-readonly">{{ formData.clinical }}</div>
                     <el-input v-else v-model="formData.clinical" maxlength="200" show-word-limit />
                 </el-form-item>
                 <el-form-item v-bind="$plus.attrFormItem('clinicalHistory', '病史', !readonly)" class="custom-col-2">
                     <div v-if="readonly" class="custom-readonly">{{ formData.clinicalHistory }}</div>
                     <el-input v-else v-model="formData.clinicalHistory" maxlength="50" show-word-limit />
+                </el-form-item>
+                <el-form-item v-bind="$plus.attrFormItem('opinion', '病例描述', !readonly)" class="custom-col-2">
+                    <div v-if="readonly" class="custom-readonly">{{ formData.opinion }}</div>
+                    <el-input v-else v-model="formData.opinion" maxlength="2000" show-word-limit />
                 </el-form-item>
                 <el-form-item v-bind="$plus.attrFormItem('machine', '机器', !readonly)" class="custom-col-2">
                     <div v-if="readonly" class="custom-readonly">{{ formData.machine }}</div>
@@ -41,38 +45,51 @@
                     <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit />
                 </el-form-item>
             </div>
-            <el-form-item  class="custom-col-2">
-                    <!-- <div v-if="readonly" class="custom-readonly">{{ formData.patientGender }}</div> -->
-                    <div v-for="item in lesionVOs" :key="item.lesionInfo">
-                        <el-input v-model="item.lesionLocation" class="el-input" placeholder="请填写病灶位置"></el-input>
-                        <el-input v-model="item.lesionInfo" class="el-input" placeholder="请填写病灶信息"></el-input>
-                        <el-button @click="addInput">添加</el-button>
-                    </div>
-                    <!-- <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit /> -->
-                </el-form-item>
-            <!-- <div class="custom-row">
-                <el-form-item v-bind="$plus.attrFormItem('imageVOs01', '病灶图', !readonly)" class="custom-col-2">
-                    <file-uploader v-if="!readonly" v-model="formData.imageVOs01" :show-file-list="false"
-                        :limit="20 * 1024 * 1024" accept="png|jpg|gif|jpeg|bmp" style="width: 100%;">
+            <el-form-item class="custom-col-2">
+                <!-- <div v-if="readonly" class="custom-readonly">{{ formData.patientGender }}</div> -->
+                <div v-for="item in lesionVOs" :key="item.lesionInfo">
+                    <el-input v-model="item.lesionLocation" class="el-input" placeholder="请填写病灶位置"></el-input>
+                    <el-input v-model="item.lesionInfo" class="el-input" placeholder="请填写病灶信息"></el-input>
+                    <el-button @click="addInput">添加</el-button>
+                </div>
+                <!-- <el-input v-else v-model="formData.patientGender" maxlength="2" show-word-limit /> -->
+            </el-form-item>
+            <div class="custom-row">
+                <el-form-item v-bind="$plus.attrFormItem('caseImageVO', '病灶图', !readonly)" class="custom-col-1">
+                    <file-uploader v-if="!readonly" v-model="formData.caseImageVO" :show-file-list="true" :multiple="false"
+                        :limit="20 * 1024 * 1024" accept="png|jpg|gif|jpeg|bmp" style="width: 15%;">
                         <template #default="scope">
                             <div class="custom-around-center">
-                                <el-icon icon="upload" :size="50" style="margin: 0 auto;" />
+                                <svg-icon icon="upload" :size="50" style="margin: 0 auto;" />
                                 {{ scope.remind }}
                             </div>
                         </template>
                     </file-uploader>
-                    <image-items :list="formData.imageVOs01" :size="[120, 160]" :deletable="!readonly"
+                    <image-items :list="formData.caseImageVO" :size="[200, 400]" :deletable="!readonly"
                         style="margin-top: 20px;">
                         <template #default="scope">
                             <base64-image :src="scope.data" />
                         </template>
                     </image-items>
                 </el-form-item>
-                <el-form-item v-bind="$plus.attrFormItem('imageVOs00', '原图', !readonly)" class="custom-col-2">
-                    <image-uploader v-model="formData.imageVOs00" :disabled="readonly"
-                        style="--custom-width-standard: 30vw;" />
+                <el-form-item v-bind="$plus.attrFormItem('labelImageVO', '原图', !readonly)" class="custom-col-1">
+                    <file-uploader v-if="!readonly" v-model="formData.labelImageVO" :show-file-list="true" :multiple="false"
+                        :limit="20 * 1024 * 1024" accept="png|jpg|gif|jpeg|bmp" style="width: 15%;">
+                        <template #default="scope">
+                            <div class="custom-around-center">
+                                <svg-icon icon="upload" :size="50" style="margin: 0 auto;" />
+                                {{ scope.remind }}
+                            </div>
+                        </template>
+                    </file-uploader>
+                    <image-items :list="formData.labelImageVO" :size="[200, 400]" :deletable="!readonly"
+                        style="margin-top: 20px;">
+                        <template #default="scope">
+                            <base64-image :src="scope.data" />
+                        </template>
+                    </image-items>
                 </el-form-item>
-            </div> -->
+            </div>
 
         </el-form>
         <template v-if="!readonly" #footer>
@@ -82,7 +99,7 @@
                 </template>
             </toolbar>
         </template>
-        
+
     </full-panel>
 </template>
 
@@ -91,8 +108,6 @@ import { Options } from "vue-class-component";
 import BasePage from "@/pages/BasePage";
 import * as api from '@/api/case'
 import { ElMessage } from 'element-plus';
-import { callbackify } from "util";
-import { trigger } from "@vue/reactivity";
 
 @Options({
     name: 'CaseEditor',
@@ -103,13 +118,15 @@ export default class CaseEditor extends BasePage {
 
     formData: any = {}
 
+    user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
+
     lesionVOs = [
         { lesionLocation: '', lesionInfo: '' }
     ]
 
     FILE_TYPE = {
-        MASTER: '00',
-        THUMBNAIL: '01'
+        LABEL: '01',
+        CASE: '02'
     }
 
     get caseId() {
@@ -131,25 +148,25 @@ export default class CaseEditor extends BasePage {
         const resp = await api.findCaseDetail({
             caseId: this.caseId
         })
-        if (resp && resp.data && resp.data[0]) {
-            const vo = resp.data[0]
-            vo.imageVOs01 = []
-            vo.imageVOs.forEach(async fsVO => {
-                const { fileType } = fsVO.fileInfoVO
-                if (fileType === this.FILE_TYPE.MASTER) {
-                    vo.imageVOs00 = [fsVO]
-                } else if (fileType === this.FILE_TYPE.THUMBNAIL) {
-                    vo.imageVOs01.push(fsVO)
-                }
-            })
+        if (resp && resp.data) {
+            const vo = resp.data
+            // vo.imageVOs01 = []
+            // vo.imageVOs.forEach(async fsVO => {
+            //     const { fileType } = fsVO.fileInfoVO
+            //     if (fileType === this.FILE_TYPE.MASTER) {
+            //         vo.imageVOs00 = [fsVO]
+            //     } else if (fileType === this.FILE_TYPE.THUMBNAIL) {
+            //         vo.imageVOs01.push(fsVO)
+            //     }
+            // })
             this.formData = vo
         }
         this.loading = false
     }
 
     // 动态添加
-    addInput () {
-      this.lesionVOs.push({ lesionLocation: '', lesionInfo: '' })
+    addInput() {
+        this.lesionVOs.push({ lesionLocation: '', lesionInfo: '' })
     }
 
     async doSave() {
@@ -157,12 +174,11 @@ export default class CaseEditor extends BasePage {
         if (!valid) {
             return
         }
-        const vo = this.formData
-        // const imageVOs00 = vo.imageVOs00[0]
-        // const imageVOs01 = vo.imageVOs01
+        let vo = this.formData
         const lesionVOs = this.lesionVOs
-        const userId = '123456'
-        // imageVOs00.resourceType = this.FILE_TYPE.MASTER
+        const userId = this.user.userId
+        vo.labelImageVO.resourceType = this.FILE_TYPE.LABEL
+        vo.caseImageVO.resourceType = this.FILE_TYPE.CASE
         // imageVOs01.forEach((fsVO, i) => {
         //     fsVO.resourceType = this.FILE_TYPE.THUMBNAIL
         // })
@@ -174,7 +190,7 @@ export default class CaseEditor extends BasePage {
             lesionVOs
         }
         this.saveLoading = true
-        await api.saveCase({ caseVO,userId })
+        await api.saveCase({ caseVO, userId })
         this.saveLoading = false
         ElMessage.success('保存成功！')
         this.$router.go(-1)

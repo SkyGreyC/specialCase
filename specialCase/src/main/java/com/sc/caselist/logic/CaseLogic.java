@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -48,7 +49,7 @@ public class CaseLogic {
     @Transactional
     public String insertCase(CaseVO caseVO, UserVO userVO){
         List<LesionVO> lesionVOs=caseVO.getLesionVOs();
-        List<ImageVO> imageVOs=caseVO.getImageVOs();
+//        List<ImageVO> imageVOs=caseVO.getImageVOs();
         CaseEntity entity = MapToBean.toBean(caseVO, CaseEntity.class);
         String caseId = CommonUtils.getUUID();
         entity.setCaseId(caseId);
@@ -69,7 +70,11 @@ public class CaseLogic {
     public String saveCase(CaseVO caseVO, String userId){
         UserEntity user = userLogic.findUserByUserId(userId);
         List<LesionVO> lesionVOs=caseVO.getLesionVOs();
-        List<ImageVO> imageVOs=caseVO.getImageVOs();
+        ImageVO caseImageVO=caseVO.getCaseImageVO();
+        ImageVO labelImageVO=caseVO.getLabelImageVO();
+        List<ImageVO> imageVOs = new ArrayList<>();
+        imageVOs.add(caseImageVO);
+        imageVOs.add(labelImageVO);
         String caseId = caseVO.getCaseId();
         if(CommonUtils.isNull(caseId)){
             caseId = CommonUtils.getUUID();
@@ -155,7 +160,13 @@ public class CaseLogic {
         caseVO.setLesionVOs(lesionVOs);
         List<ImageEntity> imageEntities = imageLogic.findImageByResourceId(caseId);
         List<ImageVO> imageVOs = MapToBean.toList(imageEntities,ImageVO.class);
-        caseVO.setImageVOs(imageVOs);
+        for(ImageVO imageVO:imageVOs){
+            if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
+                caseVO.setCaseImageVO(imageVO);
+            }else if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
+                caseVO.setLabelImage(imageVO);
+            }
+        }
         MarkEntity markEntity = markMapper.findByUserIdAndCaseId(caseVO.getCaseId(),userId);
         if(markEntity!=null){
             caseVO.setIsMarked(markEntity.getIsDel());

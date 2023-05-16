@@ -13,8 +13,8 @@
         <!-- 用于触发elForm的校验事件 -->
         <!-- <el-input v-show="1 === 0" v-model="mdValue" /> -->
         <template v-if="showFileList">
-            <div v-for="item in imageVOs" :key="item.imageVO.imageId" class="file-item">
-                <el-link :underline="false" @click="downloadFile(item)">{{ item.imageVO.imageName }}</el-link>
+            <div v-for="item in imageVOs" :key="item.imageId" class="file-item">
+                <el-link :underline="false" @click="downloadFile(item)">{{ item.imageName }}</el-link>
                 <el-link v-if="!disabled" :underline="false" type="danger" style="margin-left: 10px;"
                     @click="removeFile(item)">删除</el-link>
             </div>
@@ -40,20 +40,13 @@ import { Options, Emit, Model, Prop } from 'vue-property-decorator';
 import BaseComponent from '../BaseComponent';
 import request from '@/utils/request'
 
-declare interface ImageVO {
-    imageVO: any
-    blob?: Blob
-    base64?: String
-    text?: String
-    filename?: String
-}
 
 @Options({
     name: 'FileUploader'
 })
 export default class FileUploader extends BaseComponent {
     @Model('modelValue', { default: () => [] })
-    value: Array<ImageVO>
+    value: any
 
     @Prop({ default: 'http://localhost:8080/image/uploadFile' })
     uploadUrl: string
@@ -114,8 +107,6 @@ export default class FileUploader extends BaseComponent {
      */
     @Emit('change')
     onFileUpload(resp, file, progress) {
-        console.log(progress)
-        console.log(resp)
         const result = resp
         // 从正在上传的附件列表中移除
         const index = this.progressList.indexOf(progress)

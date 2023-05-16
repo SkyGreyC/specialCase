@@ -103,20 +103,6 @@ export default class HomeEditor extends BasePage {
         this.$router.go(-1)
     }
 
-           /**
-     * 获取附件的访问路径
-     */
-     getFileURL(vo): String {
-        if (!vo) {
-            return null
-        }
-        const imageId = vo.imageId
-        if (imageId) {
-            return `${BASE_URL}/image/downloadFile?imageId=${imageId}`
-        }
-        return null
-    }
-
 }
 
 </script>

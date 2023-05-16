@@ -46,7 +46,7 @@ const router = useRouter()
 const route = useRoute()
 //登录相关
 // const user = useUser(); // 相当于setup方法
-const user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
+let user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
 
 
 //首页前端栏
@@ -68,12 +68,14 @@ const isWhiteBg = computed(() => {
     return false
 })
 
-const showMore= () => {
-              if(!user) {
-              }else {
-                ElMessage.error('请登录后查看')
-              }
-            }
+const showMore = () => {
+    user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
+    if (user.nickName) {
+        router.push('/case')
+    } else {
+        ElMessage.error('请登录后查看')
+    }
+}
 </script>
 <style lang='scss' scoped>
 .section {
