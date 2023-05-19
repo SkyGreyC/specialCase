@@ -146,7 +146,8 @@ export default class CaseEditor extends BasePage {
     async doQuery() {
         this.loading = true
         const resp = await api.findCaseDetail({
-            caseId: this.caseId
+            caseId: this.caseId,
+            userId: this.user.userId
         })
         if (resp && resp.data) {
             const vo = resp.data
@@ -177,11 +178,13 @@ export default class CaseEditor extends BasePage {
         let vo = this.formData
         const lesionVOs = this.lesionVOs
         const userId = this.user.userId
-        vo.labelImageVO.resourceType = this.FILE_TYPE.LABEL
-        vo.caseImageVO.resourceType = this.FILE_TYPE.CASE
-        // imageVOs01.forEach((fsVO, i) => {
-        //     fsVO.resourceType = this.FILE_TYPE.THUMBNAIL
-        // })
+        vo.caseImageVO.forEach((fsVO, i) => {
+            fsVO.resourceType = this.FILE_TYPE.CASE
+        })
+        vo.labelImageVO.forEach((fsVO, i) => {
+            fsVO.resourceType = this.FILE_TYPE.LABEL
+        })
+        console.log(vo)
         const caseVO = {
             ...vo,
             // imageVOs00: null,
@@ -189,6 +192,7 @@ export default class CaseEditor extends BasePage {
             // imageVOs: [imageVOs00, ...imageVOs01],
             lesionVOs
         }
+        console.log(caseVO)
         this.saveLoading = true
         await api.saveCase({ caseVO, userId })
         this.saveLoading = false

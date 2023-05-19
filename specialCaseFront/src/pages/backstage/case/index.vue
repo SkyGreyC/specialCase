@@ -18,8 +18,10 @@
         <el-table-column label="操作">
             <template #default="scope">
                 <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
-                <el-link :underline="false" type="primary" @click="doEdit(scope.row)" style="margin-left: 10px;">编辑</el-link>
-                <el-link :underline="false" type="danger" @click="doDelete(scope.row)" style="margin-left: 10px;">删除</el-link>
+                <el-link :underline="false" type="primary" @click="doEdit(scope.row)"
+                    style="margin-left: 10px;">编辑</el-link>
+                <el-link :underline="false" type="danger" @click="doDelete(scope.row)"
+                    style="margin-left: 10px;">删除</el-link>
             </template>
         </el-table-column>
     </page-table>
@@ -63,7 +65,7 @@ export default class CaseManage extends BaseResourceList {
         const flag = await ElMessageBox.confirm('确定删除？')
         if (flag) {
             this.loading = true
-            await api.deleteCase({ userId: row.userId })
+            await api.deleteCase({ caseId: row.caseId })
             this.loading = false
             ElMessage.success('删除成功！')
             this.doQuery()
@@ -74,7 +76,7 @@ export default class CaseManage extends BaseResourceList {
         this.$router.push({
             path: this.$route.path + '/editor',
             query: {
-                detailId: row.userId
+                detailId: row.caseId
             }
         })
     }
@@ -83,7 +85,7 @@ export default class CaseManage extends BaseResourceList {
         this.$router.push({
             path: this.$route.path + '/editor',
             query: {
-                id: row.userId
+                id: row.caseId
             }
         })
     }

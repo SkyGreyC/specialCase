@@ -52,9 +52,9 @@ public class CaseVO {
 
     private List<LesionVO> lesionVOs;
 
-    private ImageVO caseImageVO;
+    private List<ImageVO> caseImageVO;
 
-    private ImageVO labelImageVO;
+    private List<ImageVO> labelImageVO;
 
     public String getCaseId() {
         return caseId;
@@ -248,19 +248,19 @@ public class CaseVO {
         this.lesionVOs = lesionVOs;
     }
 
-    public ImageVO getCaseImageVO() {
+    public List<ImageVO> getCaseImageVO() {
         return caseImageVO;
     }
 
-    public void setCaseImageVO(ImageVO caseImageVO) {
+    public void setCaseImageVO(List<ImageVO> caseImageVO) {
         this.caseImageVO = caseImageVO;
     }
 
-    public ImageVO getLabelImageVO() {
+    public List<ImageVO> getLabelImageVO() {
         return labelImageVO;
     }
 
-    public void setLabelImage(ImageVO labelImageVO) {
+    public void setLabelImage(List<ImageVO> labelImageVO) {
         this.labelImageVO = labelImageVO;
     }
 }

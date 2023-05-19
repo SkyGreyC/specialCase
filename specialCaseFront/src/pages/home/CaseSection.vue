@@ -11,6 +11,7 @@
             </template>
         </el-table-column>
     </normal-table>
+    <preview-viewer v-model="previewIndex" :preview="preview" />
 </template>
 
 <script lang="ts">
@@ -18,18 +19,28 @@ import * as api from '@/api/case'
 import { Options } from "vue-class-component";
 import BasePage from "../BasePage";
 import { ElMessageBox, ElMessage } from 'element-plus';
+import PreviewViewer from "@/pages/case/components/PreviewViewer.vue";
 
 const queryData = {
     page: { current: 1, size: 10 },
     homeVO: { homeType: '00' }
 }
 @Options({
-    name: 'CaseSection'
+    name: 'CaseSection',
+    components: {
+        PreviewViewer
+    }
 })
 export default class CaseSection extends BasePage {
     tableData = { records: [], total: 0 }
 
     page = { current: 1, size: 20 }
+
+    previewIndex = -1
+
+    preview = {}
+
+    user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
 
     created() {
         this.doQuery()
@@ -50,13 +61,17 @@ export default class CaseSection extends BasePage {
         }
     }
 
-    doLook(row: any) {
-        this.$router.push({
-            path: this.$route.path + '/editor',
-            query: {
-                detailId: row.userId
-            }
+    async doLook(row: any) {
+        const resp = await api.findCaseDetail({
+            caseId: row.caseId,
+            userId: this.user.userId
         })
+        if (resp && resp.data) {
+            const vo = resp.data
+            this.preview = vo
+        }
+        console.log(this.preview)
+        this.previewIndex = 1
     }
 
 }

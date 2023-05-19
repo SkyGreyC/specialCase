@@ -1,119 +1,176 @@
-<!-- <template>
-<div v-show="visible" class="preview-viewer">
-    <template v-if="visible">
-        <span v-show="!viewerTarger" class="preview-viewer__btn preview-viewer__prev" @click="doPrev">
+<template>
+    <div v-show="visible" class="preview-viewer">
+        <template v-if="visible">
+            <!-- <span v-show="!viewerTarget" class="preview-viewer__btn preview-viewer__prev" @click="doPrev">
             <svg-icon icon="arrow-left-circle" :size="44" />
         </span>
-        <span v-show="!viewerTarger" class="preview-viewer__btn preview-viewer__next" @click="doNext">
+        <span v-show="!viewerTarget" class="preview-viewer__btn preview-viewer__next" @click="doNext">
             <svg-icon icon="arrow-right-circle" :size="44" />
-        </span>
-        <span class="preview-viewer__mask" @click="doClose" />
-        <div class="preview-viewer__content">
-            <el-scrollbar class="preview-viewer__image">
-                <div class="custom-panel-lg custom-around-center" style="min-height: 70vh;">
-                    <base64-image v-if="forImage" :src="refVO" @click="openViewer(item)" />
-                    <template v-else>
-                        <el-image v-for="(item, i) in thumbnailVOs" :key="i" :src="$fs.getFileURL(item)" @click="openViewer(item)" />
-                    </template>
-                </div>
-            </el-scrollbar>
-            <full-panel class="preview-viewer__detail custom-panel-lg">
-                <div class="custom-title" style="word-break: break-all;">{{ currentItem.resoureName }}</div>
-                <div class="custom-subtext" style="padding: 8px 0;word-break: break-all;">编号：{{ currentItem.resoureNum }}</div>
-                <hr class="custom-hr">
-                <el-form label-width="85px">
-                    <el-form-item>
-                        <template #label>
-                            <span>大</span>
-                            <span>小：</span>
-                        </template>
-                        {{ $fs.getFileSizeUnit(refVO.fileInfoVO.attSize) }}
-                    </el-form-item>
-                    <el-form-item>
-                        <template #label>
-                            <span>格</span>
-                            <span>式：</span>
-                        </template>
-                        {{ refVO.fileInfoVO.suffix.substr(1) }}
-                    </el-form-item>
-                    <el-form-item>
-                        <template #label>
-                            <span>下</span>
-                            <span>载</span>
-                            <span>次</span>
-                            <span>数：</span>
-                        </template>
-                        {{ refVO.fileInfoVO.downloadCount }}
-                    </el-form-item>
-                </el-form>
-                <template #footer>
-                    <div style="margin: 10px 0;text-align: center;">
-                        <el-button type="primary" style="min-width: 150px;" @click="download">
-                            下载{{ categoryLabel }}
-                        </el-button>
+        </span> -->
+            <span class="preview-viewer__mask" @click="doClose" />
+            <div class="preview-viewer__content">
+                <el-scrollbar class="preview-viewer__image">
+                    <div class="custom-panel-lg custom-around-center" style="min-height: 70vh;">
+                        <base64-image :src="caseImageVO" />
+                        <!-- <base64-image :src="caseImageVO" @click="openViewer(item)" /> -->
+                        <!-- <template v-else>
+                        <el-image v-for="(item, i) in thumbnailVOs" :key="i" :src="getFileURL(item)" @click="openViewer(item)" />
+                    </template> -->
                     </div>
-                </template>
-            </full-panel>
-        </div>
-    </template>
-    <el-image-viewer v-if="viewTarget" :url-list="[viewerTarget.base64]" class="image-viewer" @close="viewTarget = null" />
-</div>
+                </el-scrollbar>
+                <full-panel class="preview-viewer__detail custom-panel-lg">
+                    <div class="custom-title" style="word-break: break-all;">{{ currentItem.caseTitle }}</div>
+                    <div class="custom-subtext" style="padding: 8px 0;word-break: break-all;">病史：{{
+                        currentItem.clinicalHistory }}
+                    </div>
+                    <hr class="custom-hr">
+                    <el-form label-width="85px">
+                        <el-form-item>
+                            <template #label>
+                                <span>性</span>
+                                <span>别：</span>
+                            </template>
+                            {{ currentItem.patientGender }}
+                        </el-form-item>
+                        <el-form-item>
+                            <template #label>
+                                <span>年</span>
+                                <span>龄：</span>
+                            </template>
+                            {{ currentItem.patientAge }}
+                        </el-form-item>
+                        <el-form-item>
+                            <template #label>
+                                <span>病</span>
+                                <span>例：</span>
+                            </template>
+                            {{ currentItem.clinical }}
+                        </el-form-item>
+                        <el-form-item>
+                            <template #label>
+                                <span>机</span>
+                                <span>器：</span>
+                            </template>
+                            {{ currentItem.machine }}
+                        </el-form-item>
+                        <el-form-item>
+                            <template #label>
+                                <span>示</span>
+                                <span>踪</span>
+                                <span>剂：</span>
+                            </template>
+                            {{ currentItem.tracer }}
+                        </el-form-item>
+                        <el-form-item>
+                            <template #label>
+                                <span>诊</span>
+                                <span>断：</span>
+                            </template>
+                            {{ currentItem.diagnosis }}
+                        </el-form-item>
+                        <el-form-item>
+                            <template #label>
+                                <span>病</span>
+                                <span>例</span>
+                                <span>描</span>
+                                <span>述：</span>
+                            </template>
+                            {{ currentItem.opinion }}
+                        </el-form-item>
+                        <el-form-item v-for="(item, i) in currentItem.lesionVOs" :key="item.lesionId" :index="i + ''">
+                            <template #label>
+                                <span>病</span>
+                                <span>灶</span>
+                                <span>位</span>
+                                <span>置</span>
+                                <span>{{ i + 1 }}：</span>
+                            </template>
+                            {{ item.lesionLocation }}，{{ item.lesionInfo }}
+                        </el-form-item>
+                    </el-form>
+                    <template #footer>
+                        <div style="margin: 10px 0;text-align: center;">
+                            <el-button type="primary" style="min-width: 150px;" @click="doClose">
+                                收藏
+                            </el-button>
+                            <el-button type="primary" style="min-width: 150px;" @click="doClose">
+                                返回
+                            </el-button>
+                        </div>
+                    </template>
+                </full-panel>
+            </div>
+        </template>
+        <el-image-viewer v-if="viewerTarget" :url-list="[viewerTarget.base64]" class="image-viewer"
+            @close="viewerTarget = null" />
+    </div>
 </template>
 
 <script lang="ts">
 import { Options, Prop, Model } from "vue-property-decorator";
 import BasePage from "../../BasePage";
+import { BASE_URL } from "@/utils/request";
 
 @Options({
     name: 'PreviewViewer'
 })
 export default class PreviewViewer extends BasePage {
-    @Model('modelValue', {default: -1})
+    @Model('modelValue', { default: -1 })
     value
 
-    @Prop({ default: () => [] })
-    previewList
+    @Prop({ default: {} })
+    preview
 
     viewerTarget = null
 
     get currentItem() {
-        return this.previewList[this.value] || this.previewList[0]
+        // return this.preview[this.value] || this.preview[0]
+        // console.log(this.preview)
+        return this.preview
     }
 
-    get forImage() {
-        const category = this.currentItem.resourceCategory
-        const { IMAGE } = this.$res
-        return IMAGE.value === category
+    get caseImageVO() {
+        return this.preview.caseImageVO[0]
     }
 
-    get categoryLabel() {
-        const category = this.currentItem.resourceCategory
-        const { IMAGE, DOC, PPT } = this.$res
-        if (DOC.value === category) {
-            return DOC.label
-        } else if (PPT.value === category) {
-            return PPT.label
-        } else {
-            return IMAGE.label
-        }
+    get labelImageVO() {
+        return this.preview.labelImageVO[0]
     }
 
-    get thumbnailVOs() {
-        const {fileAndSliceVOs} = this.currentItem
-        const { THUMBNAIL } = this.$res.FILE_TYPE
-        //缩略图
-        const vos = this.$fs.filterByType(fileAndSliceVOs, THUMBNAIL)
-        if (vos.length) {
-            return vos
-        }
-        return []
-    }
+    // get forImage() {
+    //     const category = this.currentItem.resourceCategory
+    //     const { IMAGE } = this.$res
+    //     return IMAGE.value === category
+    // }
 
-    get refVO() {
-        const { MASTER } = this.$res.FILE_TYPE
-        const { fileAndSliceVOs } = this.currentItem
-        return this.$refs.findByType(fileAndSliceVOs, MASTER, MASTER)
-    }
+    // get categoryLabel() {
+    //     const category = this.currentItem.resourceCategory
+    //     const { IMAGE, DOC, PPT } = this.$res
+    //     if (DOC.value === category) {
+    //         return DOC.label
+    //     } else if (PPT.value === category) {
+    //         return PPT.label
+    //     } else {
+    //         return IMAGE.label
+    //     }
+    // }
+
+    // get thumbnailVOs() {
+    //     const {fileAndSliceVOs} = this.currentItem
+    //     const { THUMBNAIL } = this.$res.FILE_TYPE
+    //     //缩略图
+    //     const vos = this.$fs.filterByType(fileAndSliceVOs, THUMBNAIL)
+    //     if (vos.length) {
+    //         return vos
+    //     }
+    //     return []
+    // }
+
+    // get refVO() {
+    //     const { MASTER } = this.$res.FILE_TYPE
+    //     const { fileAndSliceVOs } = this.currentItem
+    //     return this.$refs.findByType(fileAndSliceVOs, MASTER, MASTER)
+    // }
 
     get visible() {
         return this.value >= 0
@@ -122,33 +179,47 @@ export default class PreviewViewer extends BasePage {
     openViewer(item) {
         this.viewerTarget = item
     }
-    
-    doPrev() {
-        if (this.value > 0) {
-            this.value = this.value - 1
-        } else {
-            this.value = this.previewList.length - 1
-        }
-    }
 
-    doNext() {
-        if (this.value < this.previewList.length - 1) {
-            this.value = this.value + 1
-        } else {
-            this.value = 0
-        }
-    }
+    // doPrev() {
+    //     if (this.value > 0) {
+    //         this.value = this.value - 1
+    //     } else {
+    //         this.value = this.preview.length - 1
+    //     }
+    // }
+
+    // doNext() {
+    //     if (this.value < this.preview.length - 1) {
+    //         this.value = this.value + 1
+    //     } else {
+    //         this.value = 0
+    //     }
+    // }
 
     doClose() {
         this.value = -1
     }
 
-    download() {
-        const vo = this.refVO
-        if (vo) {
-            vo.filename = this.currentItem.resourceName
-            this.$fs.downloadFile(vo)
+    // download() {
+    //     const vo = this.refVO
+    //     if (vo) {
+    //         vo.filename = this.currentItem.resourceName
+    //         this.$fs.downloadFile(vo)
+    //     }
+    // }
+
+    /**
+     * 获取附件的访问路径
+     */
+    getFileURL(vo): String {
+        if (!vo) {
+            return null
         }
+        const imageId = vo[0].imageId
+        if (imageId) {
+            return `${BASE_URL}/image/downloadFile?imageId=${imageId}`
+        }
+        return null
     }
 }
 </script>
@@ -159,20 +230,24 @@ export default class PreviewViewer extends BasePage {
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 10;
 
     .base64-image {
         cursor: pointer;
     }
+
     //去除全屏/关闭全屏功能，默认都是全屏
     :deep(.el-image-viewer__img) {
         max-height: none !important;
         max-width: none !important;
     }
+
     // 去除全屏/关闭全屏按钮
     :deep(.el-image-viewer__actions_inner) {
         .el-image-viewer__actions__divider {
             display: none;
         }
+
         i:nth-child(4) {
             display: none;
         }
@@ -229,9 +304,9 @@ export default class PreviewViewer extends BasePage {
 }
 
 .preview-viewer__content {
-    margin: 15vh 25vw;
-    width: 50vw;
-    height: 70vh;
+    margin: 5vh 15vw;
+    width: 70vw;
+    height: 90vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -243,18 +318,19 @@ export default class PreviewViewer extends BasePage {
 }
 
 .preview-viewer__image {
-    width: 60%;
+    width: 45%;
     height: 100%;
     border-radius: 8px 0 0 8px;
     background-color: #eee;
+
     .el-image {
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
     }
 }
 
 .preview-viewer__detail {
-    width: 40%;
+    width: 55%;
     height: 100%;
 }
 
@@ -268,4 +344,4 @@ export default class PreviewViewer extends BasePage {
         color: var(--el-text-color-secondary);
     }
 }
-</style> -->
+</style>

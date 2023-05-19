@@ -5,13 +5,12 @@
         </el-header>
         <el-main>
             <div class="section section-aliceblue" style="margin-bottom: 80px;">
-                <div class="section-head">
+                <!-- <div class="section-head">
                     <p class="section-title">病例列表</p>
-                </div>
+                </div> -->
                 <CaseList />
             </div>
             <CommonFooter type="default" />
-            <!-- <preview-viewer v-model="previewIndex" :preview-list="previewList" /> -->
         </el-main>
         <el-footer>版权所有</el-footer>
     </el-container>
@@ -25,18 +24,6 @@ import CaseList from './CaseList.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '@/store/user';
 import { ElMessageBox, ElMessage } from 'element-plus';
-// import PreviewViewer from "./components/PreviewViewer.vue";
-
-// @Options({
-//     name: 'CaseIndex',
-//     // components: {
-//     //     PreviewViewer
-//     // }
-// })
-// export default class CaseIndex extends BasePage {
-//     previewIndex = -1
-//     previewList = []
-// }
 
 const router = useRouter()
 const route = useRoute()

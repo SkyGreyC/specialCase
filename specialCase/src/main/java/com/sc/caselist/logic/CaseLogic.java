@@ -70,11 +70,15 @@ public class CaseLogic {
     public String saveCase(CaseVO caseVO, String userId){
         UserEntity user = userLogic.findUserByUserId(userId);
         List<LesionVO> lesionVOs=caseVO.getLesionVOs();
-        ImageVO caseImageVO=caseVO.getCaseImageVO();
-        ImageVO labelImageVO=caseVO.getLabelImageVO();
+        List<ImageVO> caseImageVOs=caseVO.getCaseImageVO();
+        List<ImageVO> labelImageVOs=caseVO.getLabelImageVO();
         List<ImageVO> imageVOs = new ArrayList<>();
-        imageVOs.add(caseImageVO);
-        imageVOs.add(labelImageVO);
+        for(ImageVO vo:caseImageVOs){
+            imageVOs.add(vo);
+        }
+        for(ImageVO vo:labelImageVOs){
+            imageVOs.add(vo);
+        }
         String caseId = caseVO.getCaseId();
         if(CommonUtils.isNull(caseId)){
             caseId = CommonUtils.getUUID();
@@ -160,13 +164,17 @@ public class CaseLogic {
         caseVO.setLesionVOs(lesionVOs);
         List<ImageEntity> imageEntities = imageLogic.findImageByResourceId(caseId);
         List<ImageVO> imageVOs = MapToBean.toList(imageEntities,ImageVO.class);
+        List<ImageVO> caseImageVOs=new ArrayList<>();
+        List<ImageVO> labelImageVOs=new ArrayList<>();
         for(ImageVO imageVO:imageVOs){
             if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
-                caseVO.setCaseImageVO(imageVO);
+                caseImageVOs.add(imageVO);
             }else if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
-                caseVO.setLabelImage(imageVO);
+                labelImageVOs.add(imageVO);
             }
         }
+        caseVO.setCaseImageVO(caseImageVOs);
+        caseVO.setLabelImage(labelImageVOs);
         MarkEntity markEntity = markMapper.findByUserIdAndCaseId(caseVO.getCaseId(),userId);
         if(markEntity!=null){
             caseVO.setIsMarked(markEntity.getIsDel());
