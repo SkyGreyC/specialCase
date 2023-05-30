@@ -32,7 +32,7 @@ public class MarkService {
             String caseId = MapUtils.getString(map,"caseId");
             String userId = MapUtils.getString(map,"userId");
             if(CommonUtils.isAnyNull(caseId,userId)){
-                model.msgError("保存收藏信息失败，有内容为空");
+                model.msgError("保存收藏信息失败，用户未登录或案例不存在");
                 return model;
             }
             markLogic.saveMarkInfo(caseId,userId);

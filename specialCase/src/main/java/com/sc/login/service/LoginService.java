@@ -84,11 +84,15 @@ public class LoginService {
     public JsonModel registerUser(@RequestBody Map<String, Object> map){
         try{
             JsonModel model = new JsonModel();
-            UserVO userVO = MapToBean.getObject(map,"userVO",UserVO.class);
-            if(CommonUtils.isAnyNull(userVO.getUserName(),userVO.getPassword())){
+            String userName = MapUtils.getString(map,"userName");
+            String password = MapUtils.getString(map,"password");
+            if(CommonUtils.isAnyNull(userName,password)){
                 model.msgError("注册失败，用户名或密码为空");
                 return model;
             }
+            UserVO userVO = new UserVO();
+            userVO.setUserName(userName);
+            userVO.setPassword(password);
             userLogic.registerUser(MapToBean.toBean(userVO,UserEntity.class));
             model.msgSuccess("注册用户成功");
             return model;

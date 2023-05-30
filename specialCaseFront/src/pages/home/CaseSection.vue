@@ -7,11 +7,11 @@
         <el-table-column prop="updateTime" label="上传时间" />
         <el-table-column label="操作">
             <template #default="scope">
-                <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
+                <el-link :underline="false" type="primary" @click="doLook(scope.$index)">查看</el-link>
             </template>
         </el-table-column>
     </normal-table>
-    <preview-viewer v-model="previewIndex" :preview="preview" />
+    <preview-viewer v-model="previewIndex" :previewList="previewList" />
 </template>
 
 <script lang="ts">
@@ -19,7 +19,7 @@ import * as api from '@/api/case'
 import { Options } from "vue-class-component";
 import BasePage from "../BasePage";
 import { ElMessageBox, ElMessage } from 'element-plus';
-import PreviewViewer from "@/pages/case/components/PreviewViewer.vue";
+import PreviewViewer from "@/pages/case/components/HomeViewer.vue";
 
 const queryData = {
     page: { current: 1, size: 10 },
@@ -38,7 +38,7 @@ export default class CaseSection extends BasePage {
 
     previewIndex = -1
 
-    preview = {}
+    previewList = []
 
     user = JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
 
@@ -61,17 +61,9 @@ export default class CaseSection extends BasePage {
         }
     }
 
-    async doLook(row: any) {
-        const resp = await api.findCaseDetail({
-            caseId: row.caseId,
-            userId: this.user.userId
-        })
-        if (resp && resp.data) {
-            const vo = resp.data
-            this.preview = vo
-        }
-        console.log(this.preview)
-        this.previewIndex = 1
+    async doLook(index: any) {
+        this.previewList = this.tableData.records
+        this.previewIndex = index
     }
 
 }

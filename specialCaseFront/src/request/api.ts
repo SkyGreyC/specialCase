@@ -33,6 +33,10 @@ export const LogoutAPI = (): Res<null> => instance.post("/admin/logout");
 export const loginAPI = (data: ReqLogin): Res<any> =>
     instance.post("/login/login", data);
 
+// post请求，有参数,如传用户名和密码
+export const registerAPI = (data: ReqLogin): Res<any> =>
+instance.post("/login/registerUser", data);
+
 // post请求，重置密码
 export const resetAPI = (data: ReqLogin): Res<any> =>
 instance.post("/login/resetPassword", data);

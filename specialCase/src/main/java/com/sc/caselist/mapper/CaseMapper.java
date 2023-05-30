@@ -26,6 +26,11 @@ public interface CaseMapper {
     List<CaseEntity> findByWhere(IPage<?> page, @Param("case") CaseEntity entity);
 
     /**
+     * 查询收藏信息
+     */
+    List<CaseEntity> findMarkList(IPage<?> page, @Param("case") CaseEntity entity);
+
+    /**
      * loadByKey
      */
     CaseEntity loadByKey( @Param("caseId") String caseId);

@@ -29,18 +29,19 @@
                         <div v-if="user.nickName" class="list-item">
                             <div>
                                 <h3>具体工作</h3>
-                                <el-button type="primary" style="height: 40px;" @click="">病例查看</el-button>
+                                <el-button type="primary" style="height: 40px;" @click="goPage('/case')">病例查看</el-button>
                             </div>
                             <div>
                                 <h3>个人信息</h3>
-                                <el-button type="primary" plain style="height: 40px;" @click="">我的信息</el-button>
-                                <el-button type="primary" plain style="height: 40px;" @click="">我的收藏</el-button>
+                                <el-button type="primary" plain style="height: 40px;" @click="doLook">我的信息</el-button>
+                                <el-button type="primary" plain style="height: 40px;"
+                                    @click="goPage('/case')">我的收藏</el-button>
                             </div>
-                            <div>
+                            <div v-if="user.userType === '02'">
                                 <h3>后台管理</h3>
                                 <div class="personal-menu-item" @click="goPage('/backstage')">
                                     <span>
-                                        <el-button type="primary" style="height: 40px;" @click="">管理界面</el-button>
+                                        <el-button type="primary" style="height: 40px;">管理界面</el-button>
                                     </span>
                                 </div>
                             </div>
@@ -55,7 +56,7 @@
                                     </el-input>
                                 </el-form-item>
                                 <el-form-item v-show="this.current_menu === 'register'" label="确认密码" prop="password">
-                                    <el-input type="password" v-model="formData.form.password"></el-input>
+                                    <el-input type="password" v-model="confirmPwd"></el-input>
                                 </el-form-item>
                                 <el-form-item>
                                     <el-button @click="submit(formData.form)">{{ this.current_menu === "login" ? "登录" : "注册"
@@ -73,18 +74,23 @@
             </div>
         </div>
     </div>
+    <personal-card v-model="previewIndex" :preview="preview" />
 </template>
 
 <script lang="ts">
 import { ref, inject, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useUser } from '@/store/user';
-import { loginAPI } from '@/request/api'
+import { loginAPI, registerAPI } from '@/request/api'
 import { Options } from "vue-class-component";
 import BasePage from "../BasePage";
+import PersonalCard from "@/pages/home/PersonalCard.vue";
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 @Options({
-    name: 'LoginSection'
+    name: 'LoginSection',
+    components: {
+        PersonalCard
+    }
 })
 export default class LoginSection extends BasePage {
     router = useRouter()
@@ -95,6 +101,11 @@ export default class LoginSection extends BasePage {
     // 单向数据输出,双向数据绑定,还需要API方法的调用
     formSize = ref('default');  // formSize.value
 
+    previewIndex = -1
+
+    preview = {}
+
+    confirmPwd = ''
 
     formData = reactive({
         form: {
@@ -128,13 +139,28 @@ export default class LoginSection extends BasePage {
     // 传递参数的方式
     async submit(form) {
         try {
-            let res = await loginAPI(form);
-            if (res.code === '000') {
-                var userInfo = res.data.userInfo;
-                this.user = userInfo;
-                window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-                console.log(userInfo)
-                this.goPage('/')
+            if (this.current_menu === 'register') {
+                if (form.password === this.confirmPwd) {
+                    let res = await registerAPI(form);
+                    if (res.code === '000') {
+                        ElMessage.error(res.message)
+                        this.goPage('/')
+                    } else {
+                        ElMessage.error(res.errMessage)
+                    }
+                } else {
+                    ElMessage.error('密码不一致')
+                }
+            } else {
+                let res = await loginAPI(form);
+                if (res.code === '000') {
+                    var userInfo = res.data.userInfo;
+                    this.user = userInfo;
+                    window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+                    this.goPage('/')
+                } else {
+                    ElMessage.error(res.errMessage)
+                }
             }
         } catch (err) {
             console.log(err)
@@ -151,6 +177,15 @@ export default class LoginSection extends BasePage {
 
     goPage(path: any) {
         this.$router.push({ path })
+    }
+
+    // goMark(path: any) {
+    //     this.$router.push({ path: path, query: { type: 'mark' } })
+    // }
+
+    doLook() {
+        this.preview = this.user
+        this.previewIndex = 1
     }
 
 }

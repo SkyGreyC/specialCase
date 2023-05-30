@@ -22,7 +22,6 @@ import UserHeader from '@/pages/home/UserHeader.vue';
 import CommonFooter from '@/pages/home/CommonFooter.vue';
 import CaseList from './CaseList.vue';
 import { useRoute, useRouter } from 'vue-router'
-import { useUser } from '@/store/user';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 const router = useRouter()

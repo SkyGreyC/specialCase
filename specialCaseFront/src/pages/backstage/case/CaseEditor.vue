@@ -192,7 +192,6 @@ export default class CaseEditor extends BasePage {
             // imageVOs: [imageVOs00, ...imageVOs01],
             lesionVOs
         }
-        console.log(caseVO)
         this.saveLoading = true
         await api.saveCase({ caseVO, userId })
         this.saveLoading = false

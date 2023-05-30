@@ -16,21 +16,22 @@
             <el-table-column prop="updateTime" label="上传时间" />
             <el-table-column label="操作">
                 <template #default="scope">
-                    <el-link :underline="false" type="primary" @click="doLook(scope.row)">查看</el-link>
+                    <el-link :underline="false" type="primary" @click="doLook(scope.$index)">查看</el-link>
                 </template>
             </el-table-column>
         </page-table>
     </div>
-    <preview-viewer v-model="previewIndex" :preview="preview" />
+    <preview-viewer v-model="previewIndex" :previewList="previewList" />
 </template>
 
 <script lang="ts">
 import * as api from '@/api/case'
-import { Options } from "vue-class-component";
+import { Options, Prop } from "vue-property-decorator";
 import BasePage from "../BasePage";
-import { reactive } from 'vue'
-import { ElMessageBox, ElMessage } from 'element-plus';
+import { reactive, toRaw, getCurrentInstance } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import PreviewViewer from "./components/PreviewViewer.vue";
+import { } from 'vue'
 
 const queryData = {
     page: { current: 1, size: 10 },
@@ -46,7 +47,7 @@ export default class CaseList extends BasePage {
 
     previewIndex = -1
 
-    preview = {}
+    previewList = []
 
     tableData = { records: [], total: 0 }
 
@@ -58,13 +59,18 @@ export default class CaseList extends BasePage {
         tab_menu:
             [
                 { type: "normal", label: "所有病例" },
-                { type: "mask", label: "我收藏的" }
+                { type: "mark", label: "我收藏的" }
             ]
     })
 
     toggleMenu(type) {
         this.current_menu = type;
-        this.doQuery()
+        if (type === "normal") {
+            this.doQuery()
+        } else {
+            this.doMarkQuery()
+        }
+
     };
 
     current_menu = this.formData.tab_menu[0].type;
@@ -76,7 +82,7 @@ export default class CaseList extends BasePage {
     async doQuery() {
         this.loading = true
         const resp = await api.findCaseList({
-            page: this.page, userVO: {}
+            page: this.page, userId: this.user.userId
         })
         this.loading = false
         if (resp) {
@@ -88,17 +94,24 @@ export default class CaseList extends BasePage {
         }
     }
 
-    async doLook(row: any) {
-        const resp = await api.findCaseDetail({
-            caseId: row.caseId,
-            userId: this.user.userId
+    async doMarkQuery() {
+        this.loading = true
+        const resp = await api.findMarkList({
+            page: this.page, userId: this.user.userId
         })
-        if (resp && resp.data) {
-            const vo = resp.data
-            this.preview = vo
+        this.loading = false
+        if (resp) {
+            const records = resp.data || []
+            this.tableData = {
+                records,
+                total: resp.page ? resp.page.total : 0
+            }
         }
-        console.log(this.preview)
-        this.previewIndex = 1
+    }
+
+    doLook(index: any) {
+        this.previewList = this.tableData.records
+        this.previewIndex = index
     }
 
 }

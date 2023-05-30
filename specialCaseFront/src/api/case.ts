@@ -5,4 +5,5 @@ const SCOPE = '/case'
 export const findCaseDetail = createPost(`${SCOPE}/findCaseDetail`)
 export const saveCase = createPost(`${SCOPE}/saveCase`)
 export const findCaseList = createPost(`${SCOPE}/findCaseList`)
+export const findMarkList = createPost(`${SCOPE}/findMarkList`)
 export const deleteCase = createPost(`${SCOPE}/deleteCase`)

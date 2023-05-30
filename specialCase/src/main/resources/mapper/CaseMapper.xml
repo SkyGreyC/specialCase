@@ -330,4 +330,18 @@
         WHERE case_id = #{caseId,jdbcType=VARCHAR}
     </select>
 
+    <!-- loadByKey -->
+    <select id="findMarkList" resultMap="case">
+        SELECT
+        a.case_id,case_title,image_type,scan_type,clinical,clinical_history,machine
+        ,tracer,keywords,is_transfer,opinion,diagnosis,patient_id,patient_age
+        ,patient_gender ,patient_card,patient_phone,is_sample,creator_id,creator_name
+        ,a.is_del,update_time
+        FROM sc_case a LEFT JOIN sc_mark b
+        ON a.case_id=b.case_id
+        WHERE a.is_del=#{case.isDel,jdbcType=VARCHAR} AND b.is_del=#{case.isDel,jdbcType=VARCHAR}
+        AND b.user_id = #{case.creatorId,jdbcType=VARCHAR}
+        ORDER BY update_time DESC
+    </select>
+
 </mapper>

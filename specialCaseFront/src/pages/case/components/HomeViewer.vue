@@ -91,13 +91,6 @@
                     </el-form>
                     <template #footer>
                         <div style="margin: 10px 0;text-align: center;">
-                            <el-button v-if="currentItem.isMarked === '01'" type="primary" style="min-width: 150px;"
-                                @click="doMark(currentItem.caseId)">
-                                收藏
-                            </el-button>
-                            <el-button v-else type="primary" style="min-width: 150px;" @click="doMark(currentItem.caseId)">
-                                取消收藏
-                            </el-button>
                             <el-button type="primary" style="min-width: 150px;" @click="doClose">
                                 返回
                             </el-button>

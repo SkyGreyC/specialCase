@@ -140,12 +140,65 @@ public class CaseLogic {
         List<CaseEntity> caseEntities = caseMapper.findByWhere(page,entity);
         List<CaseVO> caseVOs = MapToBean.toList(caseEntities,CaseVO.class);
         for(CaseVO caseVO: caseVOs){
+            LesionEntity lesionEntity=new LesionEntity();
+            lesionEntity.setCaseId(caseVO.getCaseId());
+            lesionEntity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+            List<LesionEntity> lesionEntities = lesionMapper.findByWhere(lesionEntity);
+            List<LesionVO> lesionVOs = MapToBean.toList(lesionEntities,LesionVO.class);
+            caseVO.setLesionVOs(lesionVOs);
+            List<ImageEntity> imageEntities = imageLogic.findImageByResourceId(caseVO.getCaseId());
+            List<ImageVO> imageVOs = MapToBean.toList(imageEntities,ImageVO.class);
+            List<ImageVO> caseImageVOs=new ArrayList<>();
+            List<ImageVO> labelImageVOs=new ArrayList<>();
+            for(ImageVO imageVO:imageVOs){
+                if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
+                    caseImageVOs.add(imageVO);
+                }else if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
+                    labelImageVOs.add(imageVO);
+                }
+            }
+            caseVO.setCaseImageVO(caseImageVOs);
+            caseVO.setLabelImage(labelImageVOs);
             MarkEntity markEntity = markMapper.findByUserIdAndCaseId(caseVO.getCaseId(),userId);
             if(markEntity!=null){
-                caseVO.setIsMarked(TypeEnum.IS_MARKED.YES.toString());
+                caseVO.setIsMarked(markEntity.getIsDel());
             }else{
                 caseVO.setIsMarked(TypeEnum.IS_MARKED.NO.toString());
             }
+        }
+        return caseVOs;
+    }
+
+    /**
+     * 获取收藏病例列表
+     */
+    public List<CaseVO> findMarkList(Page<CaseVO> page,String userId){
+        CaseEntity entity = new CaseEntity();
+        entity.setCreatorId(userId);
+        entity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+        List<CaseEntity> caseEntities = caseMapper.findMarkList(page,entity);
+        List<CaseVO> caseVOs = MapToBean.toList(caseEntities,CaseVO.class);
+        for(CaseVO caseVO: caseVOs){
+            LesionEntity lesionEntity=new LesionEntity();
+            lesionEntity.setCaseId(caseVO.getCaseId());
+            lesionEntity.setIsDel(TypeEnum.IS_DEL.NO.toString());
+            List<LesionEntity> lesionEntities = lesionMapper.findByWhere(lesionEntity);
+            List<LesionVO> lesionVOs = MapToBean.toList(lesionEntities,LesionVO.class);
+            caseVO.setLesionVOs(lesionVOs);
+            List<ImageEntity> imageEntities = imageLogic.findImageByResourceId(caseVO.getCaseId());
+            List<ImageVO> imageVOs = MapToBean.toList(imageEntities,ImageVO.class);
+            List<ImageVO> caseImageVOs=new ArrayList<>();
+            List<ImageVO> labelImageVOs=new ArrayList<>();
+            for(ImageVO imageVO:imageVOs){
+                if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.CASE.toString())){
+                    caseImageVOs.add(imageVO);
+                }else if(imageVO.getResourceType().equals(TypeEnum.RESOURCE_TYPE.LESION.toString())){
+                    labelImageVOs.add(imageVO);
+                }
+            }
+            caseVO.setCaseImageVO(caseImageVOs);
+            caseVO.setLabelImage(labelImageVOs);
+            caseVO.setIsMarked(TypeEnum.IS_MARKED.YES.toString());
         }
         return caseVOs;
     }
@@ -155,12 +208,13 @@ public class CaseLogic {
      */
     public CaseVO findCaseDetail(String caseId,String userId){
         CaseEntity entity = caseMapper.loadByKey(caseId);
+        CaseVO caseVO = MapToBean.toBean(entity,CaseVO.class);
+
         LesionEntity lesionEntity=new LesionEntity();
         lesionEntity.setCaseId(caseId);
         lesionEntity.setIsDel(TypeEnum.IS_DEL.NO.toString());
         List<LesionEntity> lesionEntities = lesionMapper.findByWhere(lesionEntity);
         List<LesionVO> lesionVOs = MapToBean.toList(lesionEntities,LesionVO.class);
-        CaseVO caseVO = MapToBean.toBean(entity,CaseVO.class);
         caseVO.setLesionVOs(lesionVOs);
         List<ImageEntity> imageEntities = imageLogic.findImageByResourceId(caseId);
         List<ImageVO> imageVOs = MapToBean.toList(imageEntities,ImageVO.class);

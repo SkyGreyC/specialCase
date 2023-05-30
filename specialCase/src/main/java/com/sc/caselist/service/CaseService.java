@@ -108,6 +108,23 @@ public class CaseService {
     }
 
     /*
+     * 获取收藏病例列表
+     * */
+    @RequestMapping(value = "/findMarkList",method = RequestMethod.POST)
+    public JsonModel findMarkList(@RequestBody Map<String, Object> map){
+        try{
+            JsonModel model = new JsonModel();
+            Page<CaseVO> page = MapToBean.getPage(map,"page",CaseVO.class);
+            String userId = MapUtils.getString(map,"userId");
+            List<CaseVO> data = caseLogic.findMarkList(page,userId);
+            model.msgSuccess("获取病例列表成功",data,page);
+            return model;
+        }catch(Exception e){
+            return new JsonModel().msgError(e.getMessage());
+        }
+    }
+
+    /*
      * 获取病例详情
      * */
     @RequestMapping(value = "/findCaseDetail",method = RequestMethod.POST)
