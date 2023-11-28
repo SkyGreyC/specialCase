@@ -1,5 +1,10 @@
 <template>
-    <el-container :class="{ 'white-bg': isWhiteBg }" class="personal-center">
+    <el-container class="personal-center">
+        <el-header class="header">
+            <div class="app-logo" @click="toHome">
+                <svg-icon icon="logo2" height="64px" width="400px" />
+            </div>
+        </el-header>
         <el-header class="custom-space-between" style="border-bottom: var(--custom-border);">
             <UserHeader />
         </el-header>
@@ -76,8 +81,35 @@ const showMore = () => {
         ElMessage.error('请登录后查看')
     }
 }
+
+// const mounted = () => {
+//     console.log(window.innerWidth);
+//     var browerWidth = window.innerWidth; //浏览器可视宽度
+//     var baseWidth = 1920; //设计稿宽度
+//     var zoomValue = browerWidth / baseWidth; //缩放比例计算
+//     document.getElementById("mainContainer").style.transform = "scale(" + zoomValue + "," + zoomValue + ")"; //mainContainer为主容器id
+//     window.onresize = function () { //窗口尺寸变化时，重新计算和缩放
+//       browerWidth = window.innerWidth;
+//       zoomValue = browerWidth / baseWidth;
+//       document.getElementById("mainContainer").style.transform = "scale(" + zoomValue + "," + zoomValue + ")";
+//     }
+// }
 </script>
+
 <style lang='scss' scoped>
+.header{
+    width: 1920px;
+    height: 96px;
+    background: #040E1E;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 0.85;
+}
+.app-logo {
+    cursor: pointer;
+    display: flex;
+    padding: 80px 16px;
+    box-sizing: border-box;
+}
 .section {
     .section-head {
         margin: var(--custom-size-gap-lg) 0;
@@ -117,25 +149,7 @@ const showMore = () => {
 }
 
 .personal-center {
-    height: 100%;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    // height: 100vh;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-image: url('@/assets/images/index/bg.png');
-
-    &.white-bg {
-        background: #fff;
-    }
-
-    :deep(.el-backtop) {
-        background-color: transparent;
-        box-shadow: none;
-        width: 36px;
-        height: 36px;
-    }
+  width: 1920px;
 }
 
 .app-logo {
